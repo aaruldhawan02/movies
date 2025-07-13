@@ -27,7 +27,7 @@ function App() {
       {/* Hero Section */}
       <div className="hero-section">
         <h1 className="hero-title">Movie Collections Hub</h1>
-        <p className="hero-subtitle">Your gateway to curated movie experiences across all genres</p>
+        <p className="hero-subtitle">You're gateway into the movie opinions of Aarul Dhawan</p>
       </div>
       
       {/* Collections Grid */}
