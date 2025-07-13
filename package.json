@@ -1,7 +1,7 @@
 {
   "name": "movie-hub",
   "version": "0.1.0",
-  "homepage": "https://aaruldhawan02.github.io/movie-hub",
+  "homepage": "https://aaruldhawan02.github.io/movies",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",

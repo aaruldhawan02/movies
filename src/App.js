@@ -8,7 +8,7 @@ function App() {
       url: 'https://aaruldhawan02.github.io/marvel-movies',
       available: true,
       color: '#d23b3b',
-      logo: '/logos/marvel-logo.svg', // Update extension if needed
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/marvel-logo.svg`,
       count: '100+ projects'
     },
     {
@@ -17,7 +17,7 @@ function App() {
       url: '#',
       available: false,
       color: '#0078d4',
-      logo: '/logos/dc-logos.png', // Update extension if needed
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/dc-logo.png`,
       count: 'Coming Soon'
     }
   ];
