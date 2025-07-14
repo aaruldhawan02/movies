@@ -13,12 +13,12 @@ function App() {
     },
     {
       title: 'DC Movies',
-      description: 'Coming Soon - DC Universe Collection',
-      url: '#',
-      available: false,
+      description: 'Explore the DC Universe and beyond',
+      url: 'https://aaruldhawan02.github.io/dc-movies',
+      available: true,
       color: '#0078d4',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/dc-logo.png`,
-      count: 'Coming Soon'
+      count: '50+ projects'
     }
   ];
 
