@@ -27,7 +27,16 @@ function App() {
       available: true,
       color: '#ff4500',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/mission-impossible-logo.png`,
-      count: '7+ movies'
+      count: '8 movies'
+    },
+    {
+      title: 'Star Wars',
+      description: 'Experience the epic saga from a galaxy far, far away',
+      url: 'https://aaruldhawan02.github.io/star-wars/',
+      available: true,
+      color: '#ffd700',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/Star_Wars_logo.png`,
+      count: '15+ projects'
     },
     {
       title: 'Pixar Movies',
@@ -46,15 +55,6 @@ function App() {
       color: '#ff6600',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/Fast_and_Furious.png`,
       count: '10+ films'
-    },
-    {
-      title: 'Star Wars',
-      description: 'Experience the epic saga from a galaxy far, far away',
-      url: '#',
-      available: false,
-      color: '#ffd700',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/Star_Wars_logo.png`,
-      count: '9+ films'
     }
   ];
 
