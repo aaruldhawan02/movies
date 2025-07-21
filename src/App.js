@@ -19,6 +19,42 @@ function App() {
       color: '#0078d4',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/dc-logo.png`,
       count: '50+ projects'
+    },
+    {
+      title: 'Mission Impossible',
+      description: 'Explore the thrilling world of Ethan Hunt and the IMF',
+      url: 'https://aaruldhawan02.github.io/mission-impossible/',
+      available: true,
+      color: '#ff4500',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/mission-impossible-logo.png`,
+      count: '7+ movies'
+    },
+    {
+      title: 'Pixar Movies',
+      description: 'Discover the magic of Pixar Animation Studios',
+      url: '#',
+      available: false,
+      color: '#0099ff',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/Pixar-logo.png`,
+      count: '25+ films'
+    },
+    {
+      title: 'Fast and Furious',
+      description: 'Join the family for high-octane action and adventure',
+      url: '#',
+      available: false,
+      color: '#ff6600',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/Fast_and_Furious.png`,
+      count: '10+ films'
+    },
+    {
+      title: 'Star Wars',
+      description: 'Experience the epic saga from a galaxy far, far away',
+      url: '#',
+      available: false,
+      color: '#ffd700',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/Star_Wars_logo.png`,
+      count: '9+ films'
     }
   ];
 
