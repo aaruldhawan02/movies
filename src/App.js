@@ -50,9 +50,9 @@ function App() {
     {
       title: 'Fast and Furious',
       description: 'Join the family for high-octane action and adventure',
-      url: '#',
-      available: false,
-      color: '#ff6600',
+      url: 'https://aaruldhawan02.github.io/fast-saga',
+      available: true,
+      color: '#ff3838',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/Fast_and_Furious.png`,
       count: '10+ films'
     }
