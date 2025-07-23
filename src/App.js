@@ -41,8 +41,8 @@ function App() {
     {
       title: 'Pixar Movies',
       description: 'Discover the magic of Pixar Animation Studios',
-      url: '#',
-      available: false,
+      url: 'https://aaruldhawan02.github.io/pixar',
+      available: true,
       color: '#0099ff',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/Pixar-logo.png`,
       count: '25+ films'
