@@ -55,6 +55,42 @@ function App() {
       color: '#ff3838',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/Fast_and_Furious.png`,
       count: '10+ films'
+    },
+    {
+      title: 'Despicable Me',
+      description: 'Join Gru and the Minions for hilarious adventures',
+      url: 'https://aaruldhawan02.github.io/despicable-me',
+      available: true,
+      color: '#FFD700',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/Despicable_Me.png`,
+      count: '6 films'
+    },
+    {
+      title: 'Terminator',
+      description: 'Experience the battle between humans and machines',
+      url: '#',
+      available: false,
+      color: '#8B0000',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/terminator-logo.png`,
+      count: '6+ films'
+    },
+    {
+      title: 'Rocky',
+      description: 'Follow the inspiring journey of the Italian Stallion',
+      url: '#',
+      available: false,
+      color: '#B8860B',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/rocky-logo.png`,
+      count: '8+ films'
+    },
+    {
+      title: 'Harry Potter',
+      description: 'Enter the magical world of wizards and witches',
+      url: '#',
+      available: false,
+      color: '#722F37',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/harry-potter-logo.png`,
+      count: '10+ films'
     }
   ];
 
@@ -95,8 +131,6 @@ function App() {
                   {collection.available ? (
                     <a 
                       href={collection.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
                       className="explore-btn"
                     >
                       Explore Collection
