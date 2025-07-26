@@ -66,6 +66,15 @@ function App() {
       count: '6 films'
     },
     {
+      title: 'Karate Kid',
+      description: 'Master the art of karate and life lessons with Daniel-san and Mr. Miyagi',
+      url: 'https://aaruldhawan02.github.io/karate-kid',
+      available: true,
+      color: '#8B2635',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/karate-kid-logo.png`,
+      count: '12 entries'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -190,15 +199,6 @@ function App() {
       color: '#556B2F',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/maze-runner-logo.png`,
       count: '3+ films'
-    },
-    {
-      title: 'Karate Kid',
-      description: 'Master the art of karate and life lessons with Mr. Miyagi',
-      url: '#',
-      available: false,
-      color: '#B22222',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/karate-kid-logo.png`,
-      count: '6+ films'
     },
     {
       title: 'Hunger Games',
