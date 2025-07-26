@@ -91,6 +91,132 @@ function App() {
       color: '#722F37',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/harry-potter-logo.png`,
       count: '10+ films'
+    },
+    {
+      title: 'Dune',
+      description: 'Journey to the desert planet Arrakis in this epic saga',
+      url: '#',
+      available: false,
+      color: '#D2691E',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/dune-logo.png`,
+      count: '3+ films'
+    },
+    {
+      title: 'Alvin and the Chipmunks',
+      description: 'Join Alvin, Simon, and Theodore for musical adventures',
+      url: '#',
+      available: false,
+      color: '#FF6347',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/chipmunks-logo.png`,
+      count: '4+ films'
+    },
+    {
+      title: 'John Wick',
+      description: 'Follow the legendary assassin on his path of vengeance',
+      url: '#',
+      available: false,
+      color: '#2F4F4F',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/john-wick-logo.png`,
+      count: '4+ films'
+    },
+    {
+      title: 'Night at the Museum',
+      description: 'Experience history come alive in these family adventures',
+      url: '#',
+      available: false,
+      color: '#4682B4',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/night-museum-logo.png`,
+      count: '3+ films'
+    },
+    {
+      title: 'Ghostbusters',
+      description: 'Who you gonna call? Join the paranormal investigators',
+      url: '#',
+      available: false,
+      color: '#32CD32',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/ghostbusters-logo.png`,
+      count: '4+ films'
+    },
+    {
+      title: 'Godzilla',
+      description: 'Witness the king of monsters in epic kaiju battles',
+      url: '#',
+      available: false,
+      color: '#228B22',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/godzilla-logo.png`,
+      count: '6+ films'
+    },
+    {
+      title: 'Ice Age',
+      description: 'Follow Manny, Sid, and Diego through prehistoric adventures',
+      url: '#',
+      available: false,
+      color: '#87CEEB',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/ice-age-logo.png`,
+      count: '5+ films'
+    },
+    {
+      title: 'Transformers',
+      description: 'Robots in disguise battle for the fate of Earth',
+      url: '#',
+      available: false,
+      color: '#FF4500',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/transformers-logo.png`,
+      count: '7+ films'
+    },
+    {
+      title: 'Men in Black',
+      description: 'Protect Earth from alien threats with the MIB',
+      url: '#',
+      available: false,
+      color: '#000000',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/men-in-black-logo.png`,
+      count: '4+ films'
+    },
+    {
+      title: 'A Quiet Place',
+      description: 'Survive in silence in this post-apocalyptic thriller',
+      url: '#',
+      available: false,
+      color: '#8B4513',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/quiet-place-logo.png`,
+      count: '3+ films'
+    },
+    {
+      title: 'Maze Runner',
+      description: 'Escape the maze and uncover the truth behind the trials',
+      url: '#',
+      available: false,
+      color: '#556B2F',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/maze-runner-logo.png`,
+      count: '3+ films'
+    },
+    {
+      title: 'Karate Kid',
+      description: 'Master the art of karate and life lessons with Mr. Miyagi',
+      url: '#',
+      available: false,
+      color: '#B22222',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/karate-kid-logo.png`,
+      count: '6+ films'
+    },
+    {
+      title: 'Hunger Games',
+      description: 'May the odds be ever in your favor in the dystopian arena',
+      url: '#',
+      available: false,
+      color: '#DAA520',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/hunger-games-logo.png`,
+      count: '4+ films'
+    },
+    {
+      title: 'Spy Kids',
+      description: 'Join the Cortez family in their high-tech spy adventures',
+      url: '#',
+      available: false,
+      color: '#FF1493',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/spy-kids-logo.png`,
+      count: '4+ films'
     }
   ];
 
