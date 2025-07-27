@@ -84,6 +84,15 @@ function App() {
       count: '9 films'
     },
     {
+      title: 'Transformers',
+      description: 'More than meets the eye - Robots in disguise battle for the fate of Earth',
+      url: 'https://aaruldhawan02.github.io/transformers',
+      available: true,
+      color: '#00d4ff',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/transformers-logo.png`,
+      count: '8 films'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -163,15 +172,6 @@ function App() {
       color: '#87CEEB',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/ice-age-logo.png`,
       count: '5+ films'
-    },
-    {
-      title: 'Transformers',
-      description: 'Robots in disguise battle for the fate of Earth',
-      url: '#',
-      available: false,
-      color: '#FF4500',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/transformers-logo.png`,
-      count: '7+ films'
     },
     {
       title: 'Men in Black',
