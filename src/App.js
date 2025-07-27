@@ -75,6 +75,15 @@ function App() {
       count: '12 entries'
     },
     {
+      title: 'Rocky',
+      description: 'Follow the Italian Stallion from Philadelphia streets to championship glory',
+      url: 'https://aaruldhawan02.github.io/rocky',
+      available: true,
+      color: '#8B4513',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/rocky-logo.png`,
+      count: '9 films'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -82,15 +91,6 @@ function App() {
       color: '#8B0000',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/terminator-logo.png`,
       count: '6+ films'
-    },
-    {
-      title: 'Rocky',
-      description: 'Follow the inspiring journey of the Italian Stallion',
-      url: '#',
-      available: false,
-      color: '#B8860B',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/rocky-logo.png`,
-      count: '8+ films'
     },
     {
       title: 'Harry Potter',
