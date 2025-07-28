@@ -93,6 +93,15 @@ function App() {
       count: '8 films'
     },
     {
+      title: 'Godzilla',
+      description: 'Witness the king of monsters in epic kaiju battles',
+      url: 'https://aaruldhawan02.github.io/godzilla',
+      available: true,
+      color: '#ff6500',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/godzilla-logo.png`,
+      count: '6+ films'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -154,15 +163,6 @@ function App() {
       color: '#32CD32',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/ghostbusters-logo.png`,
       count: '4+ films'
-    },
-    {
-      title: 'Godzilla',
-      description: 'Witness the king of monsters in epic kaiju battles',
-      url: 'https://aaruldhawan02.github.io/godzilla',
-      available: true,
-      color: '#ff6500',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/godzilla-logo.png`,
-      count: '6+ films'
     },
     {
       title: 'Ice Age',
