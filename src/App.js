@@ -158,9 +158,9 @@ function App() {
     {
       title: 'Godzilla',
       description: 'Witness the king of monsters in epic kaiju battles',
-      url: '#',
-      available: false,
-      color: '#228B22',
+      url: 'https://aaruldhawan02.github.io/godzilla',
+      available: true,
+      color: '#ff6500',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/godzilla-logo.png`,
       count: '6+ films'
     },
