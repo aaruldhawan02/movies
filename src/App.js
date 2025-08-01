@@ -102,6 +102,15 @@ function App() {
       count: '6+ films'
     },
     {
+      title: 'Harry Potter',
+      description: 'Enter the magical world of wizards and witches at Hogwarts',
+      url: 'https://aaruldhawan02.github.io/harrypotter',
+      available: true,
+      color: '#ffd700',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/harry-potter-logo.png`,
+      count: '9+ films'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -109,15 +118,6 @@ function App() {
       color: '#8B0000',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/terminator-logo.png`,
       count: '6+ films'
-    },
-    {
-      title: 'Harry Potter',
-      description: 'Enter the magical world of wizards and witches',
-      url: '#',
-      available: false,
-      color: '#722F37',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/harry-potter-logo.png`,
-      count: '10+ films'
     },
     {
       title: 'Dune',
