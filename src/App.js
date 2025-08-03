@@ -111,6 +111,24 @@ function App() {
       count: '9+ films'
     },
     {
+      title: 'Alvin and the Chipmunks',
+      description: 'Join Alvin, Simon, and Theodore for mischievous musical adventures',
+      url: 'https://aaruldhawan02.github.io/chipmunks',
+      available: true,
+      color: '#FF6B6B',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/chipmunks-logo.png`,
+      count: '4 films'
+    },
+    {
+      title: 'Men in Black',
+      description: 'Protect Earth from alien threats with the MIB',
+      url: 'https://aaruldhawan02.github.io/meninblack',
+      available: true,
+      color: '#000000',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/men-in-black-logo.png`,
+      count: '4 films'
+    },
+    {
       title: 'Terminator',
       description: 'Experience the battle between humans and machines',
       url: '#',
@@ -127,15 +145,6 @@ function App() {
       color: '#D2691E',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/dune-logo.png`,
       count: '3+ films'
-    },
-    {
-      title: 'Alvin and the Chipmunks',
-      description: 'Join Alvin, Simon, and Theodore for musical adventures',
-      url: '#',
-      available: false,
-      color: '#FF6347',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/chipmunks-logo.png`,
-      count: '4+ films'
     },
     {
       title: 'John Wick',
@@ -172,15 +181,6 @@ function App() {
       color: '#87CEEB',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/ice-age-logo.png`,
       count: '5+ films'
-    },
-    {
-      title: 'Men in Black',
-      description: 'Protect Earth from alien threats with the MIB',
-      url: '#',
-      available: false,
-      color: '#000000',
-      logo: `${process.env.PUBLIC_URL || '.'}/logos/men-in-black-logo.png`,
-      count: '4+ films'
     },
     {
       title: 'A Quiet Place',
