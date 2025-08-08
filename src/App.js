@@ -217,6 +217,15 @@ function App() {
       color: '#FF1493',
       logo: `${process.env.PUBLIC_URL || '.'}/logos/spy-kids-logo.png`,
       count: '4+ films'
+    },
+    {
+      title: 'YRF Spy Universe',
+      description: 'Enter the world of Indian espionage with Tiger and Pathaan',
+      url: '#',
+      available: false,
+      color: '#FF6B35',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/YRF_Spy_Universe_Logo.png`,
+      count: '4+ films'
     }
   ];
 
