@@ -39,6 +39,15 @@ function App() {
       count: '15+ projects'
     },
     {
+      title: 'The Boys',
+      description: 'Explore the dark and gritty superhero satire universe',
+      url: 'https://aaruldhawan02.github.io/theboys/',
+      available: true,
+      color: '#DC2626',
+      logo: `${process.env.PUBLIC_URL || '.'}/logos/the-boys-logo.png`,
+      count: '8 shows'
+    },
+    {
       title: 'Pixar Movies',
       description: 'Discover the magic of Pixar Animation Studios',
       url: 'https://aaruldhawan02.github.io/pixar',
