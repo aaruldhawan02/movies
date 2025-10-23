@@ -135,7 +135,12 @@ function MoviePage() {
   const youtubeVideoId = getYoutubeVideoId(movie.Trailer);
   
   return (
-    <div style={{ color: 'white' }}>
+    <div style={{ 
+      color: 'white',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '0 20px'
+    }}>
       {/* Back button */}
       <Link 
         to="/"

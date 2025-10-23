@@ -389,13 +389,13 @@ function MovieCard({ movie, handleImageError, renderStarRating }) {
   const imageFilename = getImageFilename(movie.name);
   // Try multiple extensions and formats
   const possiblePaths = [
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${imageFilename}.png`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${imageFilename}.jpg`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${imageFilename}.jpeg`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${movie.name.replace(/\s+/g, '_')}.png`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${movie.name.replace(/\s+/g, '_')}.jpg`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${movie.name.replace(/\s+/g, '-')}.png`,
-    `${process.env.PUBLIC_URL}/yrf-spy-universe/movieposters/${movie.name.replace(/\s+/g, '-')}.jpg`,
+    `${process.env.PUBLIC_URL}/posters/${imageFilename}.png`,
+    `${process.env.PUBLIC_URL}/posters/${imageFilename}.jpg`,
+    `${process.env.PUBLIC_URL}/posters/${imageFilename}.jpeg`,
+    `${process.env.PUBLIC_URL}/posters/${movie.name.replace(/\s+/g, '_')}.png`,
+    `${process.env.PUBLIC_URL}/posters/${movie.name.replace(/\s+/g, '_')}.jpg`,
+    `${process.env.PUBLIC_URL}/posters/${movie.name.replace(/\s+/g, '-')}.png`,
+    `${process.env.PUBLIC_URL}/posters/${movie.name.replace(/\s+/g, '-')}.jpg`,
   ];
   
   const imagePath = possiblePaths[0]; // Start with the first one

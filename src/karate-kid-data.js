@@ -178,7 +178,7 @@ export const getImageFilename = (title) => {
 
 // Get full image path with basePath
 export const getImagePath = (filename) => {
-  return `${config.basePath}/movieposters/${filename}`;
+  return `${process.env.PUBLIC_URL || '.'}/posters/${filename}`;
 };
 
 // Get belt color based on rating

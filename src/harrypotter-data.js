@@ -121,7 +121,7 @@ export const getImageFilename = (movieName) => {
  */
 export const getImagePath = (movieName) => {
   const filename = getImageFilename(movieName);
-  return `${config.basePath}/movieposters/${filename}.png`;
+  return `${process.env.PUBLIC_URL || '.'}/posters/${filename}.png`;
 };
 
 /**

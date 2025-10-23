@@ -390,7 +390,7 @@ function TierList() {
                         {/* Movie poster image */}
                         <div style={{ position: 'relative' }}>
                           <img 
-                            src={`${process.env.PUBLIC_URL}/marvel-movies/movieposters/${getImageFilename(movie.title)}`}
+                            src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(movie.title)}`}
                             alt={`${movie.title} poster`}
                             onError={handleImageError}
                             className="movie-card-image"

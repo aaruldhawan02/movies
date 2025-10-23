@@ -398,7 +398,7 @@ function MoviePage() {
               {!posterError ? (
                 <div className="poster-container comic-panel">
                   <img 
-                    src={`${process.env.PUBLIC_URL}/marvel-movies/movieposters/${getImageFilename(movie)}`}
+                    src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(movie)}`}
                     alt={`${movie} poster`}
                     onError={handlePosterError}
                     style={{
@@ -845,7 +845,7 @@ function MoviePage() {
                       overflow: 'hidden'
                     }}>
                       <img 
-                        src={`${process.env.PUBLIC_URL}/marvel-movies/movieposters/${posterFilename}`}
+                        src={`${process.env.PUBLIC_URL}/posters/${posterFilename}`}
                         alt={`${prequel} poster`}
                         onError={(e) => {
                           e.target.style.display = 'none';
@@ -945,7 +945,7 @@ function MoviePage() {
                   }}>
                     <div style={{ position: 'relative', overflow: 'hidden' }}>
                       <img 
-                        src={`${process.env.PUBLIC_URL}/marvel-movies/movieposters/${getImageFilename(movieInOrder)}`}
+                        src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(movieInOrder)}`}
                         alt={`${movieInOrder} poster`}
                         onError={(e) => {
                           e.target.style.display = 'none';

@@ -430,7 +430,7 @@ function MoviePage() {
                   transform: 'rotate(-1deg)'
                 }}>
                   <img 
-                    src={`${process.env.PUBLIC_URL}/dc-movies/movieposters/${getImageFilename(movie)}`}
+                    src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(movie)}`}
                     alt={`${movie} poster`}
                     onError={handlePosterError}
                     style={{
@@ -938,7 +938,7 @@ function MoviePage() {
                       aspectRatio: '2/3',
                     }}>
                       <img 
-                        src={`${process.env.PUBLIC_URL}/dc-movies/movieposters/${posterFilename}`}
+                        src={`${process.env.PUBLIC_URL}/posters/${posterFilename}`}
                         alt={`${prequel} poster`}
                         onError={(e) => {
                           e.target.style.display = 'none';
@@ -1088,7 +1088,7 @@ function MoviePage() {
                   }}>
                     <div style={{ position: 'relative' }}>
                       <img 
-                        src={`${process.env.PUBLIC_URL}/dc-movies/movieposters/${getImageFilename(movieInOrder)}`}
+                        src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(movieInOrder)}`}
                         alt={`${movieInOrder} poster`}
                         onError={(e) => {
                           e.target.style.display = 'none';

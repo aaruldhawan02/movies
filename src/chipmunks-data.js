@@ -109,5 +109,5 @@ export const getImageFilename = (movieName) => {
 // Helper function to get full image path
 export const getImagePath = (movieName) => {
   const filename = getImageFilename(movieName);
-  return `${process.env.PUBLIC_URL || '.'}/chipmunks/${filename}`;
+  return `${process.env.PUBLIC_URL || '.'}/posters/${filename}`;
 };

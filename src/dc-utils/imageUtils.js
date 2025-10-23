@@ -9,7 +9,7 @@
 export const getImageBasePath = () => {
   // In development, use relative path from public folder
   // In production, use the full path with homepage prefix
-  return process.env.NODE_ENV === 'production' ? '/dc-movies/movieposters/' : '/movieposters/';
+  return process.env.NODE_ENV === 'production' ? '/posters/' : '/movieposters/';
 };
 
 /**

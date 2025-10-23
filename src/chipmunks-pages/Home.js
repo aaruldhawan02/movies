@@ -145,7 +145,7 @@ function MovieCard({ movie, handleImageError }) {
 
   // Get full image path with basePath
   function getImagePath(filename) {
-    return `${process.env.PUBLIC_URL || '.'}/chipmunks/movieposters/${filename}`;
+    return `${process.env.PUBLIC_URL || '.'}/posters/${filename}`;
   }
   
   // Function to render star rating (same logic as Pixar)

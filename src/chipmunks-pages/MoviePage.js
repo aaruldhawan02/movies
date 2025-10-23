@@ -38,7 +38,7 @@ const MoviePage = () => {
 
   // Get full image path
   const getImagePath = (filename) => {
-    return `${process.env.PUBLIC_URL || '.'}/chipmunks/movieposters/${filename}`;
+    return `${process.env.PUBLIC_URL || '.'}/posters/${filename}`;
   };
 
   // Handle image load error

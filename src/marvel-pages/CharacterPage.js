@@ -263,7 +263,7 @@ function CharacterPage() {
                     {/* Movie poster image */}
                     <div style={{ position: 'relative' }}>
                       <img 
-                        src={`${process.env.PUBLIC_URL}/marvel-movies/movieposters/${getImageFilename(project)}`}
+                        src={`${process.env.PUBLIC_URL}/posters/${getImageFilename(project)}`}
                         alt={`${project} poster`}
                         onError={(e) => {
                           e.target.style.display = 'none';
