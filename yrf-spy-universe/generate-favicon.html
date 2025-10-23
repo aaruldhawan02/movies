@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate YRF Favicon</title>
+</head>
+<body>
+    <canvas id="favicon" width="32" height="32" style="border: 1px solid #ccc; image-rendering: pixelated; width: 128px; height: 128px;"></canvas>
+    <br><br>
+    <button onclick="downloadFavicon()">Download Favicon</button>
+    
+    <script>
+        const canvas = document.getElementById('favicon');
+        const ctx = canvas.getContext('2d');
+        
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, 32, 32);
+        gradient.addColorStop(0, '#FFD700');
+        gradient.addColorStop(0.5, '#FF8C00');
+        gradient.addColorStop(1, '#FF6B00');
+        
+        // Background circle
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(16, 16, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Inner dark circle
+        ctx.fillStyle = 'rgba(26, 26, 26, 0.8)';
+        ctx.beginPath();
+        ctx.arc(16, 16, 12, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // YRF Text
+        ctx.fillStyle = '#FFD700';
+        ctx.font = 'bold 8px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('YRF', 16, 12);
+        
+        // Spy eye symbol
+        ctx.fillStyle = 'rgba(255, 140, 0, 0.8)';
+        ctx.beginPath();
+        ctx.ellipse(16, 20, 6, 3, 0, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.ellipse(16, 20, 4, 2, 0, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.fillStyle = '#1a1a1a';
+        ctx.beginPath();
+        ctx.arc(16, 20, 1.5, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(16, 19.5, 0.5, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Border
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.6)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.arc(16, 16, 15, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

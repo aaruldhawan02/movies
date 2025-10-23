@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Minion body -->
+  <ellipse cx="16" cy="20" rx="12" ry="10" fill="#FFD700" stroke="#333" stroke-width="1"/>
+  
+  <!-- Minion head -->
+  <circle cx="16" cy="12" r="10" fill="#FFD700" stroke="#333" stroke-width="1"/>
+  
+  <!-- Goggle strap -->
+  <rect x="6" y="8" width="20" height="3" fill="#333" rx="1"/>
+  
+  <!-- Left goggle -->
+  <circle cx="12" cy="12" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+  <circle cx="12" cy="12" r="2" fill="#333"/>
+  
+  <!-- Right goggle -->
+  <circle cx="20" cy="12" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+  <circle cx="20" cy="12" r="2" fill="#333"/>
+  
+  <!-- Mouth -->
+  <ellipse cx="16" cy="18" rx="3" ry="2" fill="#333"/>
+  
+  <!-- Overalls -->
+  <rect x="10" y="22" width="12" height="8" fill="#4169E1" stroke="#333" stroke-width="1"/>
+  
+  <!-- Overall straps -->
+  <rect x="12" y="16" width="2" height="8" fill="#4169E1"/>
+  <rect x="18" y="16" width="2" height="8" fill="#4169E1"/>
+  
+  <!-- Overall button -->
+  <circle cx="16" cy="25" r="1" fill="#333"/>
+</svg>
