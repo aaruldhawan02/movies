@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { formatReleaseDate, getImageFilename, getImagePath, getMovieBySlug } from './yrf-spy-universe-data';
+import { formatReleaseDate, getMovieBySlug } from './yrf-spy-universe-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -37,6 +37,17 @@ function MoviePage() {
     
     loadMovieDetails();
   }, [movieTitle]);
+
+  // Convert movie title to image filename
+  const getImageFilename = (title) => {
+    if (!title) return 'default.png';
+    return title.replace(/ /g, '_').replace(/[:,.?!]/g, '') + '.png';
+  };
+
+  // Get full image path
+  const getImagePath = (filename) => {
+    return `${process.env.PUBLIC_URL || '.'}/posters/${filename}`;
+  };
 
   // Handle image load error
   const handlePosterError = () => {
@@ -134,8 +145,8 @@ function MoviePage() {
                   transform: 'rotate(-1deg)'
                 }}>
                   <img 
-                    src={getImagePath(getImageFilename(movie.name))}
-                    alt={`${movie.name} poster`}
+                    src={movie?.name ? getImagePath(getImageFilename(movie.name)) : ''}
+                    alt={`${movie?.name || 'Movie'} poster`}
                     onError={handlePosterError}
                     style={{
                       width: '100%',
