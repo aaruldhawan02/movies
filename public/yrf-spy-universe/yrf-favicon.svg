@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="yrfGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF8C00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#yrfGradient)" filter="url(#shadow)"/>
+  
+  <!-- Inner dark circle for contrast -->
+  <circle cx="16" cy="16" r="12" fill="#1a1a1a" opacity="0.8"/>
+  
+  <!-- YRF Text -->
+  <text x="16" y="12" font-family="Arial, sans-serif" font-size="8" font-weight="bold" 
+        text-anchor="middle" fill="#FFD700" letter-spacing="0.5">YRF</text>
+  
+  <!-- Spy symbol - stylized eye -->
+  <ellipse cx="16" cy="20" rx="6" ry="3" fill="#FF8C00" opacity="0.8"/>
+  <ellipse cx="16" cy="20" rx="4" ry="2" fill="#FFD700"/>
+  <circle cx="16" cy="20" r="1.5" fill="#1a1a1a"/>
+  <circle cx="16" cy="19.5" r="0.5" fill="#FFD700"/>
+  
+  <!-- Subtle border -->
+  <circle cx="16" cy="16" r="15" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.6"/>
+</svg>

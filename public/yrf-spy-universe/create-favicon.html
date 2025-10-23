@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Create Favicon</title></head>
+<body>
+<canvas id="c" width="16" height="16"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+
+// Orange background
+ctx.fillStyle = '#FF8C00';
+ctx.fillRect(0, 0, 16, 16);
+
+// YRF text
+ctx.fillStyle = '#FFD700';
+ctx.font = '6px Arial';
+ctx.textAlign = 'center';
+ctx.fillText('YRF', 8, 6);
+
+// Simple eye
+ctx.fillStyle = '#FFD700';
+ctx.fillRect(4, 9, 8, 3);
+ctx.fillStyle = '#000';
+ctx.fillRect(7, 10, 2, 1);
+
+console.log('Data URL:', c.toDataURL());
+</script>
+</body>
+</html>

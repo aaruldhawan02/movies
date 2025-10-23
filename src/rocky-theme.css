@@ -1,0 +1,152 @@
+/* Rocky theme background */
+.rocky-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2C1810 0%, #8B4513 50%, #DAA520 100%);
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Animated boxing elements */
+.boxing-element {
+  position: absolute;
+  opacity: 0.2;
+  animation: float linear infinite;
+}
+
+/* Different element sizes and speeds */
+.boxing-element.small {
+  width: 60px;
+  height: 60px;
+  animation-duration: 80s;
+}
+
+.boxing-element.medium {
+  width: 100px;
+  height: 100px;
+  animation-duration: 120s;
+}
+
+.boxing-element.large {
+  width: 140px;
+  height: 140px;
+  animation-duration: 160s;
+}
+
+/* Animation for elements floating across the screen */
+@keyframes float {
+  0% { transform: translateX(-10%) rotate(0deg); }
+  100% { transform: translateX(110%) rotate(360deg); }
+}
+
+/* Boxing glove elements */
+.boxing-glove {
+  background: radial-gradient(circle, #8B0000 30%, #B22222 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+}
+
+.boxing-glove::before {
+  content: '';
+  position: absolute;
+  top: 70%;
+  left: 20%;
+  width: 60%;
+  height: 20%;
+  background: #654321;
+  border-radius: 10px;
+}
+
+/* Rocky-style button */
+.rocky-button {
+  background: linear-gradient(to bottom, #DAA520, #B8860B);
+  color: #2C1810;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rocky-button:hover {
+  background: linear-gradient(to bottom, #B8860B, #9A7209);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Rocky card styling */
+.rocky-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border: 2px solid #8B4513;
+}
+
+.rocky-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  border-color: #2C1810;
+}
+
+/* Gym-style elements */
+.gym-element {
+  background: rgba(44, 24, 16, 0.1);
+  border: 2px solid rgba(139, 69, 19, 0.3);
+  border-radius: 4px;
+}
+
+/* Championship belt colors */
+.belt-bronze { background-color: #CD7F32; }
+.belt-silver { background-color: #C0C0C0; }
+.belt-gold { background-color: #FFD700; }
+.belt-platinum { background-color: #E5E4E2; }
+.belt-champion { background-color: #FF6347; }
+
+/* Training wisdom text styling */
+.training-wisdom {
+  font-style: italic;
+  color: #2C1810;
+  border-left: 4px solid #8B4513;
+  padding-left: 16px;
+  margin: 16px 0;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 16px;
+  border-radius: 4px;
+}
+
+/* Philadelphia Liberty Bell styling */
+.liberty-bell {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #DAA520, #B8860B);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.liberty-bell::before {
+  content: '';
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background: #2C1810;
+  transform: translateX(-50%);
+}
+
+/* Rocky steps styling */
+.rocky-steps {
+  background: linear-gradient(45deg, #696969, #A9A9A9);
+  height: 4px;
+  margin: 2px 0;
+  border-radius: 2px;
+}

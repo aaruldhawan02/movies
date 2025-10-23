@@ -1,0 +1,32 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffed4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c9b037;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark magical background -->
+  <rect width="32" height="32" fill="#1a1a3a" rx="4"/>
+  
+  <!-- Lightning bolt -->
+  <path d="M18 2 L12 14 L16 14 L14 30 L20 18 L16 18 L18 2 Z" 
+        fill="url(#goldGradient)" 
+        filter="url(#glow)"
+        stroke="#ffd700" 
+        stroke-width="0.5"/>
+  
+  <!-- Magical sparkles -->
+  <circle cx="8" cy="8" r="1" fill="#ffd700" opacity="0.8"/>
+  <circle cx="24" cy="6" r="0.8" fill="#ffed4e" opacity="0.6"/>
+  <circle cx="26" cy="24" r="1.2" fill="#c9b037" opacity="0.7"/>
+  <circle cx="6" cy="26" r="0.6" fill="#ffd700" opacity="0.5"/>
+</svg>

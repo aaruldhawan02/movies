@@ -1,0 +1,198 @@
+/* Transformers Theme CSS */
+
+/* Background with mechanical/tech pattern */
+.transformers-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  z-index: -2;
+  overflow: hidden;
+}
+
+/* Animated tech lines/circuits */
+.tech-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+  opacity: 0.6;
+  animation: techFlow 8s linear infinite;
+}
+
+.tech-line.horizontal {
+  height: 2px;
+  width: 100%;
+  left: -100%;
+}
+
+.tech-line.vertical {
+  width: 2px;
+  height: 100%;
+  top: -100%;
+}
+
+.tech-line.small {
+  opacity: 0.3;
+  animation-duration: 6s;
+}
+
+.tech-line.medium {
+  opacity: 0.5;
+  animation-duration: 10s;
+}
+
+.tech-line.large {
+  opacity: 0.7;
+  animation-duration: 12s;
+}
+
+@keyframes techFlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+/* For vertical lines */
+.tech-line.vertical {
+  animation-name: techFlowVertical;
+}
+
+@keyframes techFlowVertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* Glowing effects for Transformers theme */
+.glow-blue {
+  text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 30px #00d4ff;
+}
+
+.glow-orange {
+  text-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00, 0 0 30px #ff6b00;
+}
+
+/* Movie card hover effects */
+.movie-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.movie-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #00d4ff;
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+/* Button styling */
+.transformers-button {
+  background: linear-gradient(45deg, #00d4ff, #0099cc);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.transformers-button:hover {
+  background: linear-gradient(45deg, #ff6b00, #cc5500);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Rating badges */
+.rating-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  display: inline-block;
+  margin: 2px;
+}
+
+.rating-badge.critic {
+  background: rgba(0, 212, 255, 0.2);
+  border: 1px solid #00d4ff;
+  color: #00d4ff;
+}
+
+.rating-badge.audience {
+  background: rgba(255, 107, 0, 0.2);
+  border: 1px solid #ff6b00;
+  color: #ff6b00;
+}
+
+.rating-badge.personal {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+/* Autobot/Decepticon themed sections */
+.autobot-section {
+  border-left: 4px solid #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.decepticon-section {
+  border-left: 4px solid #ff6b00;
+  background: rgba(255, 107, 0, 0.1);
+}
+
+/* Loading animation */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 212, 255, 0.3);
+  border-top: 4px solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .tech-line {
+    animation-duration: 4s;
+  }
+  
+  .movie-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #00d4ff, #ff6b00);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff6b00, #00d4ff);
+}

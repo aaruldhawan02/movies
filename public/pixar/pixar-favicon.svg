@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <!-- Background circle -->
+  <circle cx="24" cy="24" r="22" fill="#3b8ac4"/>
+  
+  <!-- Pixar-inspired lamp shape -->
+  <path d="M14 34C14 34 16 28 24 28C32 28 34 34 34 34" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="18" r="8" fill="#ff6b6b"/>
+  <circle cx="24" cy="18" r="5" fill="white"/>
+</svg>
