@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../meninblack-pages/Home';
 import MoviePage from '../meninblack-pages/MoviePage';
-import '../meninblack-app.css';
-import '../meninblack-theme.css';
+import '../meninblack-pages/meninblack-app.css';
+import '../meninblack-pages/meninblack-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -64,8 +64,8 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 20px rgba(255, 255, 255, 0.1)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '2px solid #ffffff',
-        backdropFilter: 'blur(10px)'
+        borderBottom: '2px solid #ffffff', zIndex: 9999,
+        backdropFilter: 'blur(10px)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -88,12 +88,20 @@ const Layout = ({ children }) => {
           }}>
             MEN IN BLACK
           </div>
-          <Link to="/" style={{ 
-            color: '#ffffff',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/meninblack" style={{ 
+              color: '#ffffff',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#ffffff',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { loadMovieInfo } from '../marvel-data';
+import { loadMovieInfo } from './marvel-data';
 import { Link } from 'react-router-dom';
 
 // Define tier colors and order

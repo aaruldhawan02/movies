@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../pixar-pages/Home';
 import MoviePage from '../pixar-pages/MoviePage';
-import '../pixar-app.css';
-import '../pixar-theme.css';
+import '../pixar-pages/pixar-app.css';
+import '../pixar-pages/pixar-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '3px solid #FFD700'
+        borderBottom: '3px solid #FFD700', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',

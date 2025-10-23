@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllMoviesSorted, formatDate, formatRating } from '../yrf-spy-universe-data';
+import { getAllMoviesSorted, formatDate, formatRating } from './yrf-spy-universe-data';
 
 function Home() {
   const [movies, setMovies] = useState([]);

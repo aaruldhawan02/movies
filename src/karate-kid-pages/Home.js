@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath, getBeltColor } from '../karate-kid-data';
+import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath, getBeltColor } from './karate-kid-data';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);

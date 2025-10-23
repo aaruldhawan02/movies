@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from '../star-wars-data';
+import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from './star-wars-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -123,7 +123,7 @@ function MoviePage() {
         }}
         onMouseOver={(e) => e.target.style.backgroundColor = '#ffffff'}
         onMouseOut={(e) => e.target.style.backgroundColor = '#FFE81F'}>
-          Back to Home
+          Back to Collection
         </Link>
       </div>
     );
@@ -458,36 +458,8 @@ function MoviePage() {
         </div>
       </div>
       
-      {/* Back to Home Button */}
-      <div style={{ 
-        maxWidth: '1100px', 
-        margin: '40px auto 0',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-        <Link to="/star-wars" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '12px 24px',
-          backgroundColor: '#FFE81F',
-          color: 'black',
-          borderRadius: '4px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          transition: 'background-color 0.2s ease',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = '#ffffff'}
-        onMouseOut={(e) => e.target.style.backgroundColor = '#FFE81F'}>
-          <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-          </svg>
-          Back to All Movies
-        </Link>
-      </div>
     </div>
   );
-}
+  }
 
 export default MoviePage;

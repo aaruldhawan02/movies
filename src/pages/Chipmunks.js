@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../chipmunks-pages/Home';
 import MoviePage from '../chipmunks-pages/MoviePage';
-import '../chipmunks-app.css';
-import '../chipmunks-theme.css';
+import '../chipmunks-pages/chipmunks-app.css';
+import '../chipmunks-pages/chipmunks-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '3px solid #FF6B6B'
+        borderBottom: '3px solid #FF6B6B', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -70,12 +70,20 @@ const Layout = ({ children }) => {
           }}>
             ALVIN AND THE CHIPMUNKS
           </div>
-          <Link to="/" style={{ 
-            color: '#fff',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/chipmunks" style={{ 
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

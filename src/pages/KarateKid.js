@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../karate-kid-pages/Home';
 import MoviePage from '../karate-kid-pages/MoviePage';
-import '../karate-kid-app.css';
-import '../karate-kid-theme.css';
+import '../karate-kid-pages/karate-kid-app.css';
+import '../karate-kid-pages/karate-kid-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -54,8 +54,8 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 20px rgba(255, 215, 0, 0.3)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '3px solid #ffd700',
-        backdropFilter: 'blur(10px)'
+        borderBottom: '3px solid #ffd700', zIndex: 9999,
+        backdropFilter: 'blur(10px)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -75,12 +75,20 @@ const Layout = ({ children }) => {
           }}>
             KARATE KID
           </div>
-          <Link to="/" style={{ 
-            color: '#ffd700',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/karate-kid" style={{ 
+              color: '#ffd700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#ffd700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

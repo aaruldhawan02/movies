@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { loadMoviePrequels, loadMovieInfo } from '../dc-data';
+import { loadMoviePrequels, loadMovieInfo } from './dc-data';
 import { Link } from 'react-router-dom';
 
 // Parse release date from string - moved to top to avoid hoisting issues

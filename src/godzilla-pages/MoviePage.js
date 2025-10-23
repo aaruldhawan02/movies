@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from '../godzilla-data';
+import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from './godzilla-data';
 
 const MoviePage = () => {
   const { movieTitle } = useParams();
@@ -108,31 +108,7 @@ const MoviePage = () => {
     );
   }
 
-  if (error || !movie) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <p style={{ color: '#ff8500', fontSize: '1.2rem', marginBottom: '20px' }}>
-          ⚠️ {error || 'Movie not found'}
-        </p>
-        <Link
-          to="/"
-          style={{
-            background: 'linear-gradient(45deg, #ff6500, #ff8500)',
-            color: 'white',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            letterSpacing: '1px'
-          }}
-        >
-          ← Back to Home
-        </Link>
-      </div>
-    );
-  }
+
 
   const imageFilename = getImageFilename(movie.Name);
   const imagePath = getImagePath(imageFilename);
@@ -140,27 +116,6 @@ const MoviePage = () => {
 
   return (
     <div>
-      {/* Back Button */}
-      <div style={{ marginBottom: '24px' }}>
-        <Link
-          to="/"
-          style={{
-            color: '#ff6500',
-            textDecoration: 'none',
-            fontSize: '1rem',
-            fontWeight: '500',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            transition: 'color 0.2s ease'
-          }}
-          onMouseOver={(e) => e.target.style.color = '#ffffff'}
-          onMouseOut={(e) => e.target.style.color = '#ff6500'}
-        >
-          ← Back to All Movies
-        </Link>
-      </div>
-
       {/* Movie Details */}
       <div style={{
         background: 'rgba(0, 0, 0, 0.8)',

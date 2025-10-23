@@ -150,7 +150,7 @@ function Home() {
   ];
 
   return (
-    <div className="App" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+    <div className="App" style={{ fontFamily: "'Arial', sans-serif" }}>
       <div className="hero-section">
         <h1 className="hero-title">Movie Collections Hub</h1>
         <p className="hero-subtitle">Your gateway into the movie opinions of Aarul Dhawan</p>
@@ -159,10 +159,16 @@ function Home() {
       <main className="collections-container">
         <div className="collections-grid">
           {movieCollections.map((collection, index) => (
-            <div 
+            <Link 
               key={index} 
+              to={collection.path}
               className="collection-card"
-              style={{ '--accent-color': collection.color }}
+              style={{ 
+                '--accent-color': collection.color,
+                '--accent-color-rgb': collection.color.replace('#', '').match(/.{2}/g).map(hex => parseInt(hex, 16)).join(', '),
+                textDecoration: 'none', 
+                color: 'inherit' 
+              }}
             >
               <div className="card-content">
                 <div className="card-icon">
@@ -175,19 +181,10 @@ function Home() {
                 <h2 className="card-title">{collection.title}</h2>
                 <p className="card-description">{collection.description}</p>
                 <div className="card-count">{collection.count}</div>
-                
-                <div className="card-actions">
-                  <Link 
-                    to={collection.path} 
-                    className="explore-btn"
-                  >
-                    Explore Collection
-                  </Link>
-                </div>
               </div>
               
               <div className="card-overlay"></div>
-            </div>
+            </Link>
           ))}
         </div>
       </main>

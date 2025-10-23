@@ -5,8 +5,8 @@ import MoviePage from '../marvel-pages/MoviePage';
 import TierList from '../marvel-pages/TierList';
 import CharacterEncyclopedia from '../marvel-pages/CharacterEncyclopedia';
 import CharacterPage from '../marvel-pages/CharacterPage';
-import '../marvel-app.css';
-import '../marvel-theme.css';
+import '../marvel-pages/marvel-app.css';
+import '../marvel-pages/marvel-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {

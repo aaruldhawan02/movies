@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../theboys-pages/Home';
 import ShowPage from '../theboys-pages/ShowPage';
-import '../cityscape.css';
+import '../theboys-pages/cityscape.css';
 
 function TheBoys() {
   useEffect(() => {
@@ -77,7 +77,7 @@ function TheBoys() {
         boxShadow: '0 4px 8px rgba(220, 38, 38, 0.3)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '2px solid #DC2626',
+        borderBottom: '2px solid #DC2626', zIndex: 9999,
         position: 'relative',
         zIndex: 10
       }}>

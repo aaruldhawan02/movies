@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../fast-pages/Home';
 import MoviePage from '../fast-pages/MoviePage';
-import '../fast-app.css';
-import '../fast-theme.css';
+import '../fast-pages/fast-app.css';
+import '../fast-pages/fast-theme.css';
 
 const Layout = ({ children }) => {
   return (
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.5)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '2px solid #ff3838',
+        borderBottom: '2px solid #ff3838', zIndex: 9999,
         position: 'relative',
         zIndex: 1
       }}>

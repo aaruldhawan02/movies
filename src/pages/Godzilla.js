@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../godzilla-pages/Home';
 import MoviePage from '../godzilla-pages/MoviePage';
-import '../godzilla-app.css';
-import '../godzilla-theme.css';
+import '../godzilla-pages/godzilla-app.css';
+import '../godzilla-pages/godzilla-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -64,8 +64,8 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 20px rgba(0, 255, 0, 0.3)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '3px solid #00ff00',
-        backdropFilter: 'blur(10px)'
+        borderBottom: '3px solid #00ff00', zIndex: 9999,
+        backdropFilter: 'blur(10px)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -85,12 +85,20 @@ const Layout = ({ children }) => {
           }}>
             GODZILLA
           </div>
-          <Link to="/" style={{ 
-            color: '#00ff00',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/godzilla" style={{ 
+              color: '#00ff00',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#00ff00',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

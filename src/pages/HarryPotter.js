@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../harrypotter-pages/Home';
 import MoviePage from '../harrypotter-pages/MoviePage';
-import '../harrypotter-app.css';
-import '../harrypotter-theme.css';
+import '../harrypotter-pages/harrypotter-app.css';
+import '../harrypotter-pages/harrypotter-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -66,8 +66,8 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 20px rgba(255, 215, 0, 0.3)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '2px solid #ffd700',
-        backdropFilter: 'blur(10px)'
+        borderBottom: '2px solid #ffd700', zIndex: 9999,
+        backdropFilter: 'blur(10px)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -90,12 +90,20 @@ const Layout = ({ children }) => {
           }}>
             HARRY POTTER
           </div>
-          <Link to="/" style={{ 
-            color: '#ffd700',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/harrypotter" style={{ 
+              color: '#ffd700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#ffd700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

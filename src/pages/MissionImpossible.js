@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../mission-impossible-pages/Home';
 import MoviePage from '../mission-impossible-pages/MoviePage';
-import '../mission-impossible-theme.css';
+import '../mission-impossible-pages/mission-impossible-theme.css';
 
 function MissionImpossible() {
   return (
@@ -26,7 +26,7 @@ function MissionImpossible() {
         boxShadow: '0 4px 15px rgba(192, 0, 0, 0.3)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '1px solid rgba(192, 0, 0, 0.3)'
+        borderBottom: '1px solid rgba(192, 0, 0, 0.3)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',

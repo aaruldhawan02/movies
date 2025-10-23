@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getMoviesByReleaseStatus, formatReleaseDate, getImageFilename, getImagePath } from '../transformers-data';
+import { getMoviesByReleaseStatus, formatReleaseDate, getImageFilename, getImagePath } from './transformers-data';
 
 function Home() {
   const [movies, setMovies] = useState([]);

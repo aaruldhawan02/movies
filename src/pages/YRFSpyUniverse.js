@@ -25,7 +25,7 @@ function YRFSpyUniverse() {
         boxShadow: '0 4px 15px rgba(255, 140, 0, 0.3)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '1px solid rgba(255, 215, 0, 0.3)'
+        borderBottom: '1px solid rgba(255, 215, 0, 0.3)', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',

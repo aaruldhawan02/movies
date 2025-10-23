@@ -3,8 +3,8 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../dc-pages/Home';
 import MoviePage from '../dc-pages/MoviePage';
 import TierList from '../dc-pages/TierList';
-import '../dc-app.css';
-import '../dc-theme.css';
+import '../dc-pages/dc-app.css';
+import '../dc-pages/dc-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -54,7 +54,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.5)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '2px solid #0078d4',
+        borderBottom: '2px solid #0078d4', zIndex: 9999,
         position: 'relative',
         zIndex: 1
       }}>

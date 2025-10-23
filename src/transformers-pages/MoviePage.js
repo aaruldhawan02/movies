@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from '../transformers-data';
+import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from './transformers-data';
 
 const MoviePage = () => {
   const { movieTitle } = useParams();
@@ -128,7 +128,7 @@ const MoviePage = () => {
             letterSpacing: '1px'
           }}
         >
-          ← Back to Home
+          Back to Hub
         </Link>
       </div>
     );
@@ -140,27 +140,6 @@ const MoviePage = () => {
 
   return (
     <div>
-      {/* Back Button */}
-      <div style={{ marginBottom: '24px' }}>
-        <Link
-          to="/"
-          style={{
-            color: '#00d4ff',
-            textDecoration: 'none',
-            fontSize: '1rem',
-            fontWeight: '500',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            transition: 'color 0.2s ease'
-          }}
-          onMouseOver={(e) => e.target.style.color = '#ffffff'}
-          onMouseOut={(e) => e.target.style.color = '#00d4ff'}
-        >
-          ← Back to All Movies
-        </Link>
-      </div>
-
       {/* Movie Details */}
       <div style={{
         background: 'rgba(0, 0, 0, 0.8)',

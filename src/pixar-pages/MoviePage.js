@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from '../pixar-data';
+import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from './pixar-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -110,23 +110,7 @@ function MoviePage() {
       </div>
     );
   }
-  
-  // Error state
-  if (error) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-        <h1 style={{ fontSize: '28px', marginBottom: '20px', color: 'white' }}>Error</h1>
-        <p style={{ marginBottom: '20px', color: '#ff6b6b' }}>{error}</p>
-        <button 
-          onClick={() => navigate('/')}
-          className="pixar-button"
-        >
-          Back to Home
-        </button>
-      </div>
-    );
-  }
-  
+
   if (!movie) return null;
   
   const imageFilename = getImageFilename(movie.Name);
@@ -136,30 +120,6 @@ function MoviePage() {
   
   return (
     <div style={{ color: 'white' }}>
-      {/* Back button */}
-      <Link 
-        to="/"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          color: 'white',
-          textDecoration: 'none',
-          marginBottom: '24px',
-          padding: '8px 16px',
-          borderRadius: '30px',
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          transition: 'all 0.2s ease',
-        }}
-        onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
-        onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
-      >
-        <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-        </svg>
-        Back to All Films
-      </Link>
-      
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 2fr',

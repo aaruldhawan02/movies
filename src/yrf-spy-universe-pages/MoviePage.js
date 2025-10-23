@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { formatReleaseDate, getImageFilename, getImagePath, getMovieBySlug } from '../yrf-spy-universe-data';
+import { formatReleaseDate, getImageFilename, getImagePath, getMovieBySlug } from './yrf-spy-universe-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -91,7 +91,7 @@ function MoviePage() {
         }}
         onMouseOver={(e) => e.target.style.backgroundColor = '#ffd700'}
         onMouseOut={(e) => e.target.style.backgroundColor = '#ff8c00'}>
-          Back to Home
+          Back to Collection
         </Link>
       </div>
     );
@@ -431,36 +431,8 @@ function MoviePage() {
         </div>
       </div>
       
-      {/* Back to Home Button */}
-      <div style={{ 
-        maxWidth: '1100px', 
-        margin: '40px auto 0',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-        <Link to="/yrf-spy-universe" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '12px 24px',
-          backgroundColor: '#ff8c00',
-          color: 'white',
-          borderRadius: '4px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          transition: 'background-color 0.2s ease',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = '#ffd700'}
-        onMouseOut={(e) => e.target.style.backgroundColor = '#ff8c00'}>
-          <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-          </svg>
-          Back to All Movies
-        </Link>
-      </div>
     </div>
   );
-}
+  }
 
 export default MoviePage;

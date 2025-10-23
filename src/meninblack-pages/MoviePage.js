@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from '../meninblack-data';
+import { loadMovieData, formatReleaseDate, getImagePath, getImageFilename } from './meninblack-data';
 
 const MoviePage = () => {
   const { movieTitle } = useParams();

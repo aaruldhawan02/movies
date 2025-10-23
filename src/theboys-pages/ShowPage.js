@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getMovieByName, formatReleaseDate, getImageFilename, getImagePath, getYouTubeVideoId, getYouTubeThumbnail } from '../theboys-data';
+import { getMovieByName, formatReleaseDate, getImageFilename, getImagePath, getYouTubeVideoId, getYouTubeThumbnail } from './theboys-data';
 
 function ShowPage() {
   const { showTitle } = useParams();
@@ -78,23 +78,6 @@ function ShowPage() {
             : "There was an error loading the show details."
           }
         </p>
-        <Link 
-          to="/"
-          style={{
-            display: 'inline-block',
-            padding: '12px 24px',
-            backgroundColor: '#DC2626',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '6px',
-            fontWeight: 'bold',
-            transition: 'background-color 0.2s ease',
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#B91C1C'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#DC2626'}
-        >
-          ← Back to Home
-        </Link>
       </div>
     );
   }
@@ -159,29 +142,6 @@ function ShowPage() {
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      {/* Back button */}
-      <Link 
-        to="/"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          marginBottom: '30px',
-          color: '#DC2626',
-          textDecoration: 'none',
-          fontSize: '16px',
-          fontWeight: '500',
-          transition: 'color 0.2s ease',
-        }}
-        onMouseOver={(e) => e.target.style.color = '#B91C1C'}
-        onMouseOut={(e) => e.target.style.color = '#DC2626'}
-      >
-        <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-        </svg>
-        Back to Home
-      </Link>
-
       {/* Main content */}
       <div style={{
         display: 'grid',

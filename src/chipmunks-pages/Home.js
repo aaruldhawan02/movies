@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { loadMovieData, formatTitleForUrl, parseRating } from '../chipmunks-data';
+import { loadMovieData, formatTitleForUrl, parseRating } from './chipmunks-data';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);

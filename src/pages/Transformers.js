@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../transformers-pages/Home';
 import MoviePage from '../transformers-pages/MoviePage';
-import '../transformers-theme.css';
+import '../transformers-pages/transformers-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -59,8 +59,8 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 20px rgba(0, 212, 255, 0.3)',
         padding: '16px 0',
         width: '100%',
-        borderBottom: '2px solid #00d4ff',
-        backdropFilter: 'blur(10px)',
+        borderBottom: '2px solid #00d4ff', zIndex: 9999,
+        backdropFilter: 'blur(10px)', zIndex: 9999,
         position: 'relative',
         zIndex: 10
       }}>

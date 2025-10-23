@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { loadMoviePrequels, getViewingOrder, loadMovieInfo } from '../marvel-data';
+import { loadMoviePrequels, getViewingOrder, loadMovieInfo } from './marvel-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from '../mission-impossible-data';
+import { loadMovieData, formatReleaseDate, getImageFilename, getImagePath } from './mission-impossible-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -102,35 +102,6 @@ function MoviePage() {
         </p>
       </div>
     );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-        <h1 style={{ fontSize: '28px', marginBottom: '20px', color: '#c00000' }}>Error Loading Movie</h1>
-        <p style={{ marginBottom: '20px', color: '#ff6b6b' }}>{error}</p>
-        <Link to="/mission-impossible" style={{
-          display: 'inline-block',
-          marginTop: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#c00000',
-          color: 'white',
-          borderRadius: '4px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          transition: 'background-color 0.2s ease'
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = '#a00000'}
-        onMouseOut={(e) => e.target.style.backgroundColor = '#c00000'}>
-          Back to Home
-        </Link>
-      </div>
-    );
-  }
-
-  if (!movie) {
-    return null;
   }
 
   const isUpcoming = new Date(movie.parsedReleaseDate) > new Date();
@@ -458,34 +429,6 @@ function MoviePage() {
         </div>
       </div>
       
-      {/* Back to Home Button */}
-      <div style={{ 
-        maxWidth: '1100px', 
-        margin: '40px auto 0',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-        <Link to="/mission-impossible" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '12px 24px',
-          backgroundColor: '#c00000',
-          color: 'white',
-          borderRadius: '4px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          transition: 'background-color 0.2s ease',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-        }}
-        onMouseOver={(e) => e.target.style.backgroundColor = '#a00000'}
-        onMouseOut={(e) => e.target.style.backgroundColor = '#c00000'}>
-          <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-          </svg>
-          Back to All Movies
-        </Link>
-      </div>
     </div>
   );
 }

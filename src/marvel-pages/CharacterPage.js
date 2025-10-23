@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { loadMovieInfo } from '../marvel-data';
+import { loadMovieInfo } from './marvel-data';
 
 function CharacterPage() {
   const { characterName } = useParams();

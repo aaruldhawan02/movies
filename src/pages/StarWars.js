@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../star-wars-pages/Home';
 import MoviePage from '../star-wars-pages/MoviePage';
-import '../star-wars-app.css';
-import '../starfield.css';
+import '../star-wars-pages/star-wars-app.css';
+import '../star-wars-pages/starfield.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -54,7 +54,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.5)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '2px solid #ffd700',
+        borderBottom: '2px solid #ffd700', zIndex: 9999,
         position: 'relative',
         zIndex: 10
       }}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getMovieByName, formatReleaseDate, getImagePath } from '../harrypotter-data';
+import { getMovieByName, formatReleaseDate, getImagePath } from './harrypotter-data';
 
 function MoviePage() {
   const { movieTitle } = useParams();
@@ -120,39 +120,7 @@ function MoviePage() {
   }
 
   // Error state
-  if (error) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '400px',
-        gap: '20px'
-      }}>
-        <div style={{
-          fontSize: '1.2rem',
-          color: '#ff6b6b',
-          textAlign: 'center'
-        }}>
-          ⚠️ {error}
-        </div>
-        <Link 
-          to="/"
-          className="magical-button"
-          style={{
-            padding: '12px 24px',
-            borderRadius: '8px',
-            fontSize: '1rem',
-            textDecoration: 'none',
-            display: 'inline-block'
-          }}
-        >
-          ← Back to Home
-        </Link>
-      </div>
-    );
-  }
+
 
   if (!movie) return null;
 
@@ -161,36 +129,6 @@ function MoviePage() {
 
   return (
     <div>
-      {/* Back Button */}
-      <div style={{ marginBottom: '24px' }}>
-        <Link 
-          to="/"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#ffd700',
-            textDecoration: 'none',
-            fontSize: '1rem',
-            padding: '8px 16px',
-            borderRadius: '8px',
-            background: 'rgba(255, 215, 0, 0.1)',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 215, 0, 0.2)';
-            e.currentTarget.style.textShadow = '0 0 10px rgba(255, 215, 0, 0.8)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)';
-            e.currentTarget.style.textShadow = 'none';
-          }}
-        >
-          ← Back to Wizarding World
-        </Link>
-      </div>
-
       {/* Movie Details */}
       <div style={{
         background: 'rgba(0, 0, 0, 0.7)',

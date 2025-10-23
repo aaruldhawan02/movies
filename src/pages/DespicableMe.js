@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Home from '../despicable-me-pages/Home';
 import MoviePage from '../despicable-me-pages/MoviePage';
-import '../despicable-me-app.css';
-import '../despicable-me-theme.css';
+import '../despicable-me-pages/despicable-me-app.css';
+import '../despicable-me-pages/despicable-me-theme.css';
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -66,7 +66,7 @@ const Layout = ({ children }) => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
         padding: '12px 0',
         width: '100%',
-        borderBottom: '4px solid #FFD700'
+        borderBottom: '4px solid #FFD700', zIndex: 9999
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -86,12 +86,20 @@ const Layout = ({ children }) => {
           }}>
             DESPICABLE ME
           </div>
-          <Link to="/" style={{ 
-            color: '#FFD700',
-            textDecoration: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}>← Back to Hub</Link>
+          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link to="/despicable-me" style={{ 
+              color: '#FFD700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>Home</Link>
+            <Link to="/" style={{ 
+              color: '#FFD700',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}>← Back to Hub</Link>
+          </nav>
         </div>
       </header>
       

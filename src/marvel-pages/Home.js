@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { loadMoviePrequels, loadMovieInfo } from '../marvel-data';
+import { loadMoviePrequels, loadMovieInfo } from './marvel-data';
 import { Link } from 'react-router-dom';
 
 function Home() {
