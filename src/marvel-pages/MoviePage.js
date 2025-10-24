@@ -135,7 +135,7 @@ function MoviePage() {
           
           // Load characters that appear in this movie
           try {
-            const characterResponse = await fetch('${process.env.PUBLIC_URL}/marvel-movies/characterMap.csv');
+            const characterResponse = await fetch(`${process.env.PUBLIC_URL}/marvel-movies/characterMap.csv`);
             if (characterResponse.ok) {
               const characterCsvText = await characterResponse.text();
               const characterLines = characterCsvText.trim().split('\n');
