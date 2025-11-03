@@ -15,11 +15,17 @@ const Layout = ({ children }) => {
     link.href = 'https://fonts.googleapis.com/css2?family=Bangers&family=Roboto+Condensed:wght@400;700&display=swap';
     document.head.appendChild(link);
     
-    const numParticles = 60;
+    // Detect mobile devices and reduce particles for performance
+    const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const numParticles = isMobile ? 15 : 60; // Reduce particles on mobile
+    
     const container = document.getElementById('marvel-background');
     if (!container) return;
 
     container.innerHTML = '';
+
+    // Skip particles entirely on very small screens or low-end devices
+    if (window.innerWidth < 480) return;
 
     for (let i = 0; i < numParticles; i++) {
       const particle = document.createElement('div');
@@ -48,6 +54,9 @@ const Layout = ({ children }) => {
     }
   }, []);
 
+  // Detect mobile for layout optimizations
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <div style={{ 
       minHeight: '100vh',
@@ -56,7 +65,7 @@ const Layout = ({ children }) => {
       fontFamily: "'Roboto', 'Roboto Condensed', sans-serif",
       display: 'flex',
       flexDirection: 'column',
-      overflow: 'hidden',
+      overflow: isMobile ? 'auto' : 'hidden', // Allow scrolling on mobile
       position: 'relative'
     }}>
       <div id="marvel-background" className="marvel-background" style={{ zIndex: 1 }}></div>
@@ -64,17 +73,23 @@ const Layout = ({ children }) => {
       <header style={{
         background: 'rgba(18, 18, 18, 0.95)',
         boxShadow: '0 4px 8px rgba(0,0,0,0.5)',
-        padding: '1rem 2rem',
+        padding: isMobile ? '0.5rem 1rem' : '1rem 2rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
-        zIndex: 10
+        zIndex: 10,
+        flexWrap: isMobile ? 'wrap' : 'nowrap'
       }}>
         <Link to="/marvel-movies" style={{ textDecoration: 'none' }}>
-          <img src={`${process.env.PUBLIC_URL}/logos/marvel-logo.svg`} alt="Marvel" style={{ height: '40px' }} />
+          <img src={`${process.env.PUBLIC_URL}/logos/marvel-logo.svg`} alt="Marvel" style={{ height: isMobile ? '30px' : '40px' }} />
         </Link>
-        <nav style={{ display: 'flex', gap: '2rem' }}>
+        <nav style={{ 
+          display: 'flex', 
+          gap: isMobile ? '1rem' : '2rem',
+          fontSize: isMobile ? '14px' : '16px',
+          flexWrap: 'wrap'
+        }}>
           <Link to="/marvel-movies" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
           <Link to="/marvel-movies/tier-list" style={{ color: 'white', textDecoration: 'none' }}>Tier List</Link>
           <Link to="/marvel-movies/characters" style={{ color: 'white', textDecoration: 'none' }}>Characters</Link>

@@ -1658,6 +1658,85 @@
   .movie-details-container {
     grid-template-columns: 1fr;
   }
+  
+  /* Reduce animations on mobile for better performance */
+  .marvel-particle {
+    animation-duration: 20s !important;
+    will-change: auto;
+  }
+  
+  /* Simplify background animations */
+  .marvel-background::after {
+    animation: none;
+  }
+  
+  .marvel-background::before {
+    animation: none;
+  }
+  
+  /* Reduce movie grid complexity */
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+  }
+  
+  /* Simplify card animations */
+  .movie-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+  
+  /* Reduce text shadow complexity */
+  .marvel-hero-title {
+    animation: none;
+    text-shadow: 0 0 10px rgba(237, 29, 36, 0.5);
+  }
+  
+  /* Simplify phase title animations */
+  .phase-title::after {
+    animation: none;
+  }
+  
+  /* Reduce header complexity */
+  .marvel-section-header::after {
+    animation: none;
+  }
+}
+
+/* Very small screens - disable most animations */
+@media (max-width: 480px) {
+  .marvel-particle {
+    display: none;
+  }
+  
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .movie-card:hover {
+    transform: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Simplify navigation */
+  header {
+    padding: 0.5rem 1rem;
+  }
+  
+  header nav {
+    gap: 1rem;
+    font-size: 14px;
+  }
+  
+  /* Reduce hero section complexity */
+  .marvel-hero {
+    padding: 30px 15px;
+  }
+  
+  .marvel-hero-title {
+    font-size: 32px;
+  }
 }
 
 .movie-details-info {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { loadMoviePrequels, loadMovieInfo } from './marvel-data';
 import { Link } from 'react-router-dom';
 
@@ -11,20 +11,36 @@ function Home() {
   const [allPhases, setAllPhases] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
 
+  // Detect mobile for performance optimizations
+  const isMobile = useMemo(() => {
+    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }, []);
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
       
       try {
-        // Load movie prequel relationships
-        const movieToPrequels = await loadMoviePrequels();
-        const movieList = Object.keys(movieToPrequels);
-        console.log('Loaded movie list:', movieList);
-        setMovies(movieList);
-        
-        // Load movie info for phase grouping
-        const movieInfoMap = await loadMovieInfo();
-        console.log('Loaded movie info for phase grouping');
+        // Add timeout for mobile devices
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Loading timeout')), isMobile ? 10000 : 15000);
+        });
+
+        const dataPromise = (async () => {
+          // Load movie prequel relationships
+          const movieToPrequels = await loadMoviePrequels();
+          const movieList = Object.keys(movieToPrequels);
+          console.log('Loaded movie list:', movieList);
+          setMovies(movieList);
+          
+          // Load movie info for phase grouping
+          const movieInfoMap = await loadMovieInfo();
+          console.log('Loaded movie info for phase grouping');
+          
+          return { movieList, movieInfoMap };
+        })();
+
+        const { movieList, movieInfoMap } = await Promise.race([dataPromise, timeoutPromise]);
         
         // Get current date for upcoming movie comparison
         const currentDate = new Date();
@@ -141,13 +157,13 @@ function Home() {
         setIsLoading(false);
       } catch (err) {
         console.error('Error loading movies:', err);
-        setError('Failed to load movie data');
+        setError(err.message === 'Loading timeout' ? 'Loading took too long. Please check your connection.' : 'Failed to load movie data');
         setIsLoading(false);
       }
     };
     
     loadData();
-  }, []);
+  }, [isMobile]);
 
   // Parse release date from string
   const parseReleaseDate = (dateStr) => {
