@@ -23,7 +23,7 @@ function Movies() {
     { name: 'The Boys', path: 'theboys', file: 'theBoys.csv' },
     { name: 'Despicable Me', path: 'despicable-me', file: 'despicableMe.csv' },
     { name: 'Men in Black', path: 'meninblack', file: 'meninblack.csv' },
-    { name: 'Chipmunks', path: 'chipmunks', file: 'chipmunks.csv' },
+    { name: 'Chipmunks', path: 'chipmunks', file: 'alvin.csv' },
     { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' }
   ];
 
