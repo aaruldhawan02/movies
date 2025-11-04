@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Franchises from './pages/Franchises';
+import Movies from './pages/Movies';
 import MarvelMovies from './pages/MarvelMovies';
 import FastSaga from './pages/FastSaga';
 import Pixar from './pages/Pixar';
@@ -24,6 +26,8 @@ function App() {
     <Router basename="/movies">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/franchises" element={<Franchises />} />
+        <Route path="/movies" element={<Movies />} />
         <Route path="/marvel-movies/*" element={<MarvelMovies />} />
         <Route path="/fast-saga/*" element={<FastSaga />} />
         <Route path="/pixar/*" element={<Pixar />} />
