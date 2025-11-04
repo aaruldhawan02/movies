@@ -24,13 +24,14 @@ function Movies() {
     { name: 'Despicable Me', path: 'despicable-me', file: 'despicableMe.csv' },
     { name: 'Men in Black', path: 'meninblack', file: 'meninblack.csv' },
     { name: 'Chipmunks', path: 'chipmunks', file: 'alvin.csv' },
-    { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' }
+    { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' },
+    { name: 'Non-Franchise', path: '', file: 'NonFranchise.csv' }
   ];
 
   useEffect(() => {
     const loadAllMovies = async () => {
       const moviePromises = franchises.map(franchise => 
-        fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path}/${franchise.file}`)
+        fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path ? franchise.path + '/' : ''}${franchise.file}`)
           .then(response => {
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
@@ -94,7 +95,10 @@ function Movies() {
 
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
-    if (movie.franchise === 'The Boys') {
+    
+    if (movie.franchise === 'Non-Franchise') {
+      window.location.href = `/movies/non-franchise/movie/${movieName}`;
+    } else if (movie.franchise === 'The Boys') {
       window.location.href = `/movies/${movie.franchisePath}/show/${movieName}`;
     } else {
       window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
@@ -138,6 +142,8 @@ function Movies() {
                   src={`${process.env.PUBLIC_URL || '.'}/posters/${
                     movie.franchise === 'The Boys'
                       ? movie.Name?.trim().toLowerCase().replace(/[:.?!'()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '-') + '.jpg'
+                      : movie.franchise === 'Non-Franchise'
+                      ? movie.Name?.trim().replace(/[\/:.?!()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
                       : (
                         movie.franchise === 'Marvel' 
                           ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')

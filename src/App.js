@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Franchises from './pages/Franchises';
 import Movies from './pages/Movies';
+import NonFranchiseMoviePage from './pages/NonFranchiseMoviePage';
 import MarvelMovies from './pages/MarvelMovies';
 import FastSaga from './pages/FastSaga';
 import Pixar from './pages/Pixar';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/franchises" element={<Franchises />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/non-franchise/movie/:movieTitle" element={<NonFranchiseMoviePage />} />
         <Route path="/marvel-movies/*" element={<MarvelMovies />} />
         <Route path="/fast-saga/*" element={<FastSaga />} />
         <Route path="/pixar/*" element={<Pixar />} />

@@ -5,6 +5,7 @@ import Navigation from '../components/Navigation';
 
 function Home() {
   const [recentMovies, setRecentMovies] = useState([]);
+  const [recentlyWatched, setRecentlyWatched] = useState([]);
 
   const featuredCollections = [
     {
@@ -41,7 +42,8 @@ function Home() {
     { name: 'Despicable Me', path: 'despicable-me', file: 'despicableMe.csv' },
     { name: 'Men in Black', path: 'meninblack', file: 'meninblack.csv' },
     { name: 'Chipmunks', path: 'chipmunks', file: 'alvin.csv' },
-    { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' }
+    { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' },
+    { name: 'Non-Franchise', path: '', file: 'NonFranchise.csv' }
   ];
 
   useEffect(() => {
@@ -49,8 +51,8 @@ function Home() {
       const twelveMonthsAgo = new Date();
       twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-      const moviePromises = franchises.map(franchise => 
-        fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path}/${franchise.file}`)
+      const moviePromises = franchises.filter(f => f.name !== 'Non-Franchise').map(franchise => 
+        fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path ? franchise.path + '/' : ''}${franchise.file}`)
           .then(response => response.ok ? response.text() : '')
           .then(csvText => {
             if (!csvText) return [];
@@ -90,15 +92,57 @@ function Home() {
         return dateB - dateA;
       });
       
-      setRecentMovies(sortedMovies.slice(0, 20));
+      setRecentMovies(sortedMovies.slice(0, 12));
+    };
+
+    const loadRecentlyWatched = async () => {
+      try {
+        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/NonFranchise.csv`);
+        if (!response.ok) return;
+        
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true,
+          complete: (results) => {
+            const watchedMovies = results.data
+              .filter(movie => {
+                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+                const rating = movie['My Tier'] || movie['My Rating'];
+                const watchedDate = movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate;
+                return name && name.trim() && rating && rating.trim() && 
+                       rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-' &&
+                       watchedDate && watchedDate.trim();
+              })
+              .map(movie => ({
+                ...movie,
+                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+                franchise: 'Non-Franchise',
+                franchisePath: ''
+              }))
+              .sort((a, b) => {
+                const dateA = new Date(a['Watched Date'] || a['Watch Date'] || a.WatchedDate);
+                const dateB = new Date(b['Watched Date'] || b['Watch Date'] || b.WatchedDate);
+                return dateB - dateA;
+              });
+            
+            setRecentlyWatched(watchedMovies.slice(0, 12));
+          }
+        });
+      } catch (error) {
+        console.error('Error loading recently watched:', error);
+      }
     };
 
     loadRecentMovies();
+    loadRecentlyWatched();
   }, []);
 
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
-    if (movie.franchise === 'The Boys') {
+    
+    if (movie.franchise === 'Non-Franchise') {
+      window.location.href = `/movies/non-franchise/movie/${movieName}`;
+    } else if (movie.franchise === 'The Boys') {
       window.location.href = `/movies/${movie.franchisePath}/show/${movieName}`;
     } else {
       window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
@@ -145,6 +189,36 @@ function Home() {
           ))}
         </div>
 
+        {recentlyWatched.length > 0 && (
+          <div className="recent-movies-section">
+            <h2 className="section-title">Recently Watched</h2>
+            <div className="movies-grid">
+              {recentlyWatched.map((movie, index) => (
+                <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
+                  <div className="movie-poster">
+                    <img 
+                      src={`${process.env.PUBLIC_URL || '.'}/posters/${movie.Name?.trim().replace(/[\/:.?!()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')}.png`}
+                      alt={`${movie.Name} poster`}
+                      onError={(e) => {e.target.style.display = 'none'}}
+                    />
+                    {(movie['My Tier'] || movie['My Rating']) && (
+                      <span className="movie-rating">
+                        {movie['My Tier'] || movie['My Rating']}
+                      </span>
+                    )}
+                  </div>
+                  <div className="movie-info">
+                    <h3 className="movie-title">{movie.Name}</h3>
+                    <div className="movie-details">
+                      <span className="movie-date">{movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {recentMovies.length > 0 && (
           <div className="recent-movies-section">
             <h2 className="section-title">Recent Projects</h2>
@@ -156,6 +230,8 @@ function Home() {
                       src={`${process.env.PUBLIC_URL || '.'}/posters/${
                         movie.franchise === 'The Boys'
                           ? movie.Name?.trim().toLowerCase().replace(/[:.?!'()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '-') + '.jpg'
+                          : movie.franchise === 'Non-Franchise'
+                          ? movie.Name?.trim().replace(/[\/:.?!()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
                           : (
                             movie.franchise === 'Marvel' 
                               ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
