@@ -38,6 +38,77 @@ body {
   position: relative;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .movies-grid, .franchise-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+    padding: 0 15px !important;
+  }
+  
+  .movie-card, .franchise-card {
+    min-height: auto !important;
+  }
+  
+  .hero-title {
+    font-size: 2rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .search-input {
+    width: 90% !important;
+    max-width: 300px !important;
+  }
+  
+  .nav-container {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 15px !important;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem !important;
+    text-align: center !important;
+  }
+  
+  .nav-tabs {
+    justify-content: center !important;
+    gap: 15px !important;
+  }
+  
+  .nav-tab {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .movies-grid, .franchise-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .nav-logo {
+    font-size: 1rem !important;
+  }
+  
+  .nav-tabs {
+    gap: 10px !important;
+  }
+  
+  .nav-tab {
+    font-size: 0.8rem !important;
+    padding: 6px 10px !important;
+  }
+}
+
 /* Animated background */
 .App::before {
   content: '';

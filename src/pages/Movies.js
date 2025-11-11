@@ -6,9 +6,41 @@ function Movies() {
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('release');
+  const [sortOrder, setSortOrder] = useState('desc');
   const [loading, setLoading] = useState(true);
 
-  const franchises = [
+  const convertRatingToNumber = (rating) => {
+    if (!rating) return 0;
+    const tierMap = {
+      'SS': 5, 'S': 4.5, 'AA': 4, 'A': 3.5, 'AB': 3, 'B': 2.5, 'C': 2, 'D': 1, 'F': 0.5
+    };
+    return tierMap[rating] || parseFloat(rating.split('/')[0]) || 0;
+  };
+
+  const sortMovies = (movies, sortType, order) => {
+    return [...movies].sort((a, b) => {
+      let result = 0;
+      switch (sortType) {
+        case 'alphabetical':
+          result = a.Name.localeCompare(b.Name);
+          break;
+        case 'rating':
+          const ratingA = convertRatingToNumber(a['My Tier'] || a['My Rating']);
+          const ratingB = convertRatingToNumber(b['My Tier'] || b['My Rating']);
+          result = ratingB - ratingA;
+          break;
+        case 'release':
+        default:
+          const dateA = new Date(a['Release Date']);
+          const dateB = new Date(b['Release Date']);
+          result = dateB - dateA;
+          break;
+      }
+      return order === 'asc' ? -result : result;
+    });
+  };
+ const franchises = [
     { name: 'Marvel', path: 'marvel-movies', file: 'movieInfo.csv' },
     { name: 'DC', path: 'dc-movies', file: 'dcmovies.csv' },
     { name: 'Fast & Furious', path: 'fast-saga', file: 'fast.csv' },
@@ -70,12 +102,7 @@ function Movies() {
       const movieArrays = await Promise.all(moviePromises);
       const combinedMovies = movieArrays.flat();
       
-      // Sort by release date
-      const sortedMovies = combinedMovies.sort((a, b) => {
-        const dateA = new Date(a['Release Date']);
-        const dateB = new Date(b['Release Date']);
-        return dateB - dateA; // Most recent first
-      });
+      const sortedMovies = sortMovies(combinedMovies, sortBy, sortOrder);
       
       setAllMovies(sortedMovies);
       setFilteredMovies(sortedMovies);
@@ -90,8 +117,9 @@ function Movies() {
       movie.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       movie.franchise.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredMovies(filtered);
-  }, [searchTerm, allMovies]);
+    const sorted = sortMovies(filtered, sortBy, sortOrder);
+    setFilteredMovies(sorted);
+  }, [searchTerm, allMovies, sortBy, sortOrder]);
 
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
@@ -122,14 +150,91 @@ function Movies() {
       <div className="hero-section">
         <h1 className="hero-title">All Movies</h1>
         <p className="hero-subtitle">{filteredMovies.length} rated movies across all franchises</p>
-        <div className="search-container">
+        <style>
+          {`
+            .search-input-custom::placeholder {
+              color: #666 !important;
+              opacity: 1 !important;
+            }
+          `}
+        </style>
+        <div className="search-container" style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center', position: 'relative', zIndex: 10, width: '100%', maxWidth: '800px' }}>
           <input
             type="text"
             placeholder="Search movies or franchises..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+            className="search-input-custom"
+            style={{ 
+              width: '400px',
+              padding: '12px 20px',
+              borderRadius: '25px',
+              border: '1px solid rgba(255,255,255,0.3)',
+              backgroundColor: 'rgba(255,255,255,0.9)',
+              fontSize: '16px',
+              outline: 'none',
+              color: '#333'
+            }}
+            onFocus={(e) => e.target.style.backgroundColor = 'white'}
+            onBlur={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.9)'}
           />
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            padding: '8px 16px',
+            borderRadius: '25px',
+            border: '1px solid rgba(255,255,255,0.3)',
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            position: 'relative',
+            zIndex: 20,
+            minWidth: '180px'
+          }}>
+            <span style={{ fontSize: '14px', fontWeight: '500', color: 'white' }}>Sort</span>
+            <select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{
+                padding: '6px 10px',
+                borderRadius: '15px',
+                border: '1px solid rgba(255,255,255,0.3)',
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                fontSize: '14px',
+                cursor: 'pointer',
+                outline: 'none',
+                color: 'white',
+                pointerEvents: 'auto'
+              }}
+            >
+              <option value="release" style={{ backgroundColor: '#333', color: 'white' }}>Release Date</option>
+              <option value="alphabetical" style={{ backgroundColor: '#333', color: 'white' }}>Alphabetical</option>
+              <option value="rating" style={{ backgroundColor: '#333', color: 'white' }}>Rating</option>
+            </select>
+            <button
+              onClick={() => setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc')}
+              style={{
+                padding: '6px',
+                borderRadius: '50%',
+                border: 'none',
+                backgroundColor: sortOrder === 'desc' ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.1)',
+                color: 'white',
+                fontSize: '14px',
+                cursor: 'pointer',
+                outline: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '28px',
+                height: '28px',
+                transition: 'all 0.2s ease',
+                pointerEvents: 'auto'
+              }}
+              title={`Sort ${sortOrder === 'desc' ? 'Ascending' : 'Descending'}`}
+            >
+              {sortOrder === 'desc' ? '↓' : '↑'}
+            </button>
+          </div>
         </div>
       </div>
       

@@ -70,6 +70,40 @@ function NonFranchiseMoviePage() {
     setPosterError(true);
   };
 
+  const renderStars = (rating) => {
+    if (!rating) return null;
+    const numericRating = parseFloat(rating.split('/')[0]);
+    const stars = [];
+    const fullStars = Math.floor(numericRating);
+    const hasHalfStar = numericRating % 1 >= 0.5;
+    
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <svg key={`full-${i}`} style={{ width: '16px', height: '16px', fill: '#FFD700' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      );
+    }
+    
+    // Add half star if needed
+    if (hasHalfStar) {
+      stars.push(
+        <svg key="half" style={{ width: '16px', height: '16px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <defs>
+            <linearGradient id="halfStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="50%" stopColor="#FFD700" />
+              <stop offset="50%" stopColor="#888888" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#halfStarGradient)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      );
+    }
+    
+    return <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>{stars}</span>;
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -250,7 +284,8 @@ function NonFranchiseMoviePage() {
                   )}
                   
                   {/* Watched Date */}
-                  {(movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate) && (
+                  {(movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate) && 
+                   (movie['Watch Date'] !== 'N/A' && movie['Watched Date'] !== 'N/A' && movie.WatchedDate !== 'N/A') && (
                     <div style={{
                       backgroundColor: 'rgba(255,255,255,0.1)',
                       padding: '10px 18px',
@@ -280,7 +315,7 @@ function NonFranchiseMoviePage() {
                       gap: '10px'
                     }}>
                       <span>My Rating:</span>
-                      <span>{movie['My Rating']}</span>
+                      <span>{renderStars(movie['My Rating'])}</span>
                     </div>
                   )}
                 </div>
