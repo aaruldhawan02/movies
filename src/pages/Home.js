@@ -51,7 +51,7 @@ function Home() {
       const twelveMonthsAgo = new Date();
       twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-      const moviePromises = franchises.filter(f => f.name !== 'Non-Franchise').map(franchise => 
+      const moviePromises = franchises.map(franchise => 
         fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path ? franchise.path + '/' : ''}${franchise.file}`)
           .then(response => response.ok ? response.text() : '')
           .then(csvText => {
@@ -92,7 +92,7 @@ function Home() {
         return dateB - dateA;
       });
       
-      setRecentMovies(sortedMovies.slice(0, 12));
+      setRecentMovies(sortedMovies.slice(0, 21));
     };
 
     const loadRecentlyWatched = async () => {
@@ -221,7 +221,7 @@ function Home() {
 
         {recentMovies.length > 0 && (
           <div className="recent-movies-section">
-            <h2 className="section-title">Recent Projects</h2>
+            <h2 className="section-title">Recently Released</h2>
             <div className="movies-grid">
               {recentMovies.map((movie, index) => (
                 <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>

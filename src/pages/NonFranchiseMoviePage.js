@@ -327,7 +327,7 @@ function NonFranchiseMoviePage() {
                   gap: '15px',
                   marginBottom: '25px'
                 }}>
-                  {movie['Critic Rating'] && (
+                  {movie['Critic Rating'] && movie['Critic Rating'] !== 'N/A' && (
                     <div style={{
                       backgroundColor: 'rgba(255,255,255,0.05)',
                       padding: '10px 18px',
@@ -340,7 +340,7 @@ function NonFranchiseMoviePage() {
                     </div>
                   )}
                   
-                  {movie['Audience Rating'] && (
+                  {movie['Audience Rating'] && movie['Audience Rating'] !== 'N/A' && (
                     <div style={{
                       backgroundColor: 'rgba(255,255,255,0.05)',
                       padding: '10px 18px',
