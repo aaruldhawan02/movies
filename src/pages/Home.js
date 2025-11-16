@@ -210,7 +210,7 @@ function Home() {
                   <div className="movie-info">
                     <h3 className="movie-title">{movie.Name}</h3>
                     <div className="movie-details">
-                      <span className="movie-date">{movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate}</span>
+                      <span className="movie-date">Watched Date: {movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate}</span>
                     </div>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ function Home() {
                   <div className="movie-info">
                     <h3 className="movie-title">{movie.Name}</h3>
                     <div className="movie-details">
-                      <span className="movie-date">{movie['Release Date']}</span>
+                      <span className="movie-date">Release Date: {movie['Release Date']}</span>
                     </div>
                   </div>
                 </div>
