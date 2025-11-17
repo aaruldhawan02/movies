@@ -10,10 +10,32 @@ function Movies() {
   const [sortOrder, setSortOrder] = useState('desc');
   const [loading, setLoading] = useState(true);
 
+  const getFranchiseColor = (franchise) => {
+    const colors = {
+      'Marvel': '#d23b3b',
+      'DC': '#0078d4',
+      'Star Wars': '#FFE81F',
+      'Fast & Furious': '#ff6b35',
+      'Mission Impossible': '#2c3e50',
+      'Pixar': '#00a8cc',
+      'Harry Potter': '#740001',
+      'Transformers': '#1e3a8a',
+      'Godzilla': '#16a085',
+      'Rocky': '#e74c3c',
+      'Karate Kid': '#f39c12',
+      'The Boys': '#000000',
+      'Despicable Me': '#f1c40f',
+      'Men in Black': '#2c3e50',
+      'Chipmunks': '#e67e22',
+      'YRF Spy Universe': '#8e44ad'
+    };
+    return colors[franchise] || '#667eea';
+  };
+
   const convertRatingToNumber = (rating) => {
     if (!rating) return 0;
     const tierMap = {
-      'SS': 5, 'S': 4.5, 'AA': 4, 'A': 3.5, 'AB': 3, 'B': 2.5, 'C': 2, 'D': 1, 'F': 0.5
+      'SS': 5, 'S': 4.5, 'AA': 4, 'A': 3.5, 'AB': 3, 'B': 2.5, 'C': 2, 'D': 1.5, 'F': 1
     };
     return tierMap[rating] || parseFloat(rating.split('/')[0]) || 0;
   };
@@ -266,6 +288,48 @@ function Movies() {
                   alt={`${movie.Name} poster`}
                   onError={(e) => {e.target.style.display = 'none'}}
                 />
+                {movie.franchise !== 'Non-Franchise' && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '8px',
+                    left: '8px',
+                    backgroundColor: getFranchiseColor(movie.franchise),
+                    color: movie.franchise === 'Star Wars' ? '#000' : 'white',
+                    padding: '6px 10px',
+                    borderRadius: '16px',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.8px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                    border: movie.franchise === 'Star Wars' ? '1px solid rgba(0,0,0,0.2)' : 'none',
+                    backdropFilter: 'blur(4px)'
+                  }}>
+                    {movie.franchise === 'Fast & Furious' ? 'F&F' : 
+                     movie.franchise === 'Mission Impossible' ? 'MI' :
+                     movie.franchise === 'YRF Spy Universe' ? 'YRF' :
+                     movie.franchise === 'Men in Black' ? 'MIB' :
+                     movie.franchise === 'Despicable Me' ? 'DM' :
+                     movie.franchise}
+                  </span>
+                )}
+                {(movie['My Tier'] || movie['My Rating']) && (
+                  <span style={{
+                    position: 'absolute',
+                    bottom: '8px',
+                    right: '8px',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    padding: '5px 8px',
+                    borderRadius: '4px',
+                    fontSize: '11px',
+                    zIndex: 3,
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    {movie['My Tier'] || movie['My Rating']}
+                  </span>
+                )}
               </div>
               <div className="movie-info">
                 <h3 className="movie-title">{movie.Name}</h3>

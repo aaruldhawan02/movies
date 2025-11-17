@@ -637,20 +637,6 @@ body {
   font-size: 0.75rem;
 }
 
-.movie-rating {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  font-weight: bold;
-  padding: 5px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  z-index: 3;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
 .movie-scores {
   display: flex;
   gap: 1rem;
