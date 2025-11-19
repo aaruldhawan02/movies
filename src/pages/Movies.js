@@ -335,11 +335,6 @@ function Movies() {
                 <h3 className="movie-title">{movie.Name}</h3>
                 <div className="movie-details">
                   <span className="movie-date">{movie['Release Date']}</span>
-                  {(movie['My Tier'] || movie['My Rating']) && (
-                    <span className="movie-rating">
-                      {movie['My Tier'] || movie['My Rating']}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>

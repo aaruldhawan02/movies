@@ -1,29 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 function Navigation() {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <nav className="navigation">
       <div className="nav-container">
         <Link to="/" className="nav-logo">Movie Collections Hub</Link>
-        <div className="nav-tabs">
+        
+        {/* Hamburger button */}
+        <button 
+          className="hamburger"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div className={`nav-tabs ${isMenuOpen ? 'nav-tabs-open' : ''}`}>
           <Link 
             to="/" 
             className={`nav-tab ${location.pathname === '/' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
           >
             Home
           </Link>
           <Link 
             to="/franchises" 
             className={`nav-tab ${location.pathname === '/franchises' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
           >
             Franchises
           </Link>
           <Link 
             to="/movies" 
             className={`nav-tab ${location.pathname === '/movies' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
           >
             Movies
           </Link>

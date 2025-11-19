@@ -244,9 +244,9 @@ function Home() {
         {/* Rating Distribution Chart */}
         {allMovies.length > 0 && (
           <div style={{ 
-            maxWidth: '700px', 
-            margin: '80px auto', 
-            padding: '40px 30px 30px',
+            maxWidth: window.innerWidth <= 768 ? 'calc(100vw - 40px)' : '700px', 
+            margin: window.innerWidth <= 768 ? '40px 20px' : '80px auto', 
+            padding: window.innerWidth <= 768 ? '25px 15px 20px' : '40px 30px 30px',
             background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%)',
             borderRadius: '24px',
             backdropFilter: 'blur(15px)',
@@ -257,7 +257,7 @@ function Home() {
               textAlign: 'center', 
               color: 'white', 
               marginBottom: '50px',
-              fontSize: '26px',
+              fontSize: window.innerWidth <= 768 ? '20px' : '26px',
               fontWeight: '700',
               margin: '0 0 50px 0',
               textShadow: '0 2px 8px rgba(0,0,0,0.4)',
