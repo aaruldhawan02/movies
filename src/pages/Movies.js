@@ -211,7 +211,8 @@ function Movies() {
             backgroundColor: 'rgba(255,255,255,0.1)',
             position: 'relative',
             zIndex: 20,
-            minWidth: '180px'
+            minWidth: '220px',
+            width: 'fit-content'
           }}>
             <span style={{ fontSize: '14px', fontWeight: '500', color: 'white' }}>Sort</span>
             <select 

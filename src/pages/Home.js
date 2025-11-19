@@ -7,6 +7,13 @@ function Home() {
   const [recentMovies, setRecentMovies] = useState([]);
   const [recentlyWatched, setRecentlyWatched] = useState([]);
   const [allMovies, setAllMovies] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getFranchiseColor = (franchise) => {
     const colors = {
@@ -244,9 +251,9 @@ function Home() {
         {/* Rating Distribution Chart */}
         {allMovies.length > 0 && (
           <div style={{ 
-            maxWidth: window.innerWidth <= 768 ? 'calc(100vw - 40px)' : '700px', 
-            margin: window.innerWidth <= 768 ? '40px 20px' : '80px auto', 
-            padding: window.innerWidth <= 768 ? '25px 15px 20px' : '40px 30px 30px',
+            maxWidth: isMobile ? 'calc(100vw - 40px)' : '700px', 
+            margin: isMobile ? '40px 20px' : '80px auto', 
+            padding: isMobile ? '25px 15px 20px' : '40px 30px 30px',
             background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%)',
             borderRadius: '24px',
             backdropFilter: 'blur(15px)',
@@ -257,7 +264,7 @@ function Home() {
               textAlign: 'center', 
               color: 'white', 
               marginBottom: '50px',
-              fontSize: window.innerWidth <= 768 ? '20px' : '26px',
+              fontSize: isMobile ? '20px' : '26px',
               fontWeight: '700',
               margin: '0 0 50px 0',
               textShadow: '0 2px 8px rgba(0,0,0,0.4)',
@@ -269,41 +276,41 @@ function Home() {
               display: 'flex', 
               alignItems: 'end', 
               justifyContent: 'center',
-              gap: '14px',
-              height: '160px',
-              padding: '0 20px'
+              gap: isMobile ? '4px' : '14px',
+              height: isMobile ? '100px' : '160px',
+              padding: isMobile ? '0 5px' : '0 20px'
             }}>
               {getRatingDistribution().map(([rating, count]) => {
                 const maxCount = Math.max(...getRatingDistribution().map(([, c]) => c));
-                const height = Math.max((count / maxCount) * 110, 15);
+                const height = Math.max((count / maxCount) * (isMobile ? 60 : 110), 10);
                 const percentage = ((count / allMovies.length) * 100).toFixed(1);
                 return (
                   <div key={rating} style={{ 
                     display: 'flex', 
                     flexDirection: 'column', 
                     alignItems: 'center',
-                    width: '58px',
+                    width: isMobile ? '25px' : '58px',
                     position: 'relative'
                   }}>
                     <div style={{
-                      fontSize: '14px',
+                      fontSize: isMobile ? '10px' : '14px',
                       color: 'white',
-                      marginBottom: '6px',
+                      marginBottom: isMobile ? '3px' : '6px',
                       fontWeight: '700',
                       textShadow: '0 1px 3px rgba(0,0,0,0.6)'
                     }}>
                       {count}
                     </div>
                     <div style={{
-                      fontSize: '11px',
+                      fontSize: isMobile ? '8px' : '11px',
                       color: 'rgba(255,255,255,0.8)',
-                      marginBottom: '10px',
+                      marginBottom: isMobile ? '5px' : '10px',
                       fontWeight: '500'
                     }}>
                       {percentage}%
                     </div>
                     <div style={{
-                      width: '42px',
+                      width: isMobile ? '20px' : '42px',
                       height: `${height}px`,
                       background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)',
                       borderRadius: '8px 8px 4px 4px',
@@ -333,9 +340,9 @@ function Home() {
                       }} />
                     </div>
                     <div style={{
-                      fontSize: '15px',
+                      fontSize: isMobile ? '10px' : '15px',
                       color: 'white',
-                      marginTop: '12px',
+                      marginTop: isMobile ? '6px' : '12px',
                       fontWeight: '700',
                       textShadow: '0 1px 3px rgba(0,0,0,0.6)'
                     }}>
