@@ -252,7 +252,7 @@ function Home() {
         {allMovies.length > 0 && (
           <div style={{ 
             maxWidth: isMobile ? 'calc(100vw - 40px)' : '700px', 
-            margin: isMobile ? '40px 20px' : '80px auto', 
+            margin: isMobile ? '40px auto' : '80px auto', 
             padding: isMobile ? '25px 15px 20px' : '40px 30px 30px',
             background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%)',
             borderRadius: '24px',
