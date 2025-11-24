@@ -8,6 +8,7 @@ function Movies() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('release');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [franchiseFilter, setFranchiseFilter] = useState('');
   const [loading, setLoading] = useState(true);
 
   const getFranchiseColor = (franchise) => {
@@ -136,12 +137,13 @@ function Movies() {
 
   useEffect(() => {
     const filtered = allMovies.filter(movie =>
-      movie.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      movie.franchise.toLowerCase().includes(searchTerm.toLowerCase())
+      (movie.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      movie.franchise.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!franchiseFilter || movie.franchise === franchiseFilter)
     );
     const sorted = sortMovies(filtered, sortBy, sortOrder);
     setFilteredMovies(sorted);
-  }, [searchTerm, allMovies, sortBy, sortOrder]);
+  }, [searchTerm, allMovies, sortBy, sortOrder, franchiseFilter]);
 
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
@@ -180,7 +182,7 @@ function Movies() {
             }
           `}
         </style>
-        <div className="search-container" style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center', position: 'relative', zIndex: 10, width: '100%', maxWidth: '800px' }}>
+        <div className="search-container" style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center', position: 'relative', zIndex: 10, width: '100%', maxWidth: '1000px' }}>
           <input
             type="text"
             placeholder="Search movies or franchises..."
@@ -200,6 +202,45 @@ function Movies() {
             onFocus={(e) => e.target.style.backgroundColor = 'white'}
             onBlur={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.9)'}
           />
+          
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            padding: '8px 16px',
+            borderRadius: '25px',
+            border: '1px solid rgba(255,255,255,0.3)',
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            position: 'relative',
+            zIndex: 20,
+            minWidth: '160px'
+          }}>
+            <span style={{ fontSize: '14px', fontWeight: '500', color: 'white' }}>Filter</span>
+            <select 
+              value={franchiseFilter} 
+              onChange={(e) => setFranchiseFilter(e.target.value)}
+              style={{
+                padding: '6px 10px',
+                borderRadius: '15px',
+                border: '1px solid rgba(255,255,255,0.3)',
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                fontSize: '14px',
+                cursor: 'pointer',
+                outline: 'none',
+                color: 'white',
+                pointerEvents: 'auto'
+              }}
+            >
+              <option value="" style={{ backgroundColor: '#333', color: 'white' }}>Select Franchise</option>
+              {[...new Set(allMovies.map(movie => movie.franchise))].filter(franchise => franchise !== 'Non-Franchise').sort().map(franchise => (
+                <option key={franchise} value={franchise} style={{ backgroundColor: '#333', color: 'white' }}>
+                  {franchise}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 
@@ -287,6 +328,10 @@ function Movies() {
                       ) + '.png'
                   }`}
                   alt={`${movie.Name} poster`}
+                  loading="lazy"
+                  style={{
+                    backgroundColor: '#2a2a2a',
+                  }}
                   onError={(e) => {e.target.style.display = 'none'}}
                 />
                 {movie.franchise !== 'Non-Franchise' && (
