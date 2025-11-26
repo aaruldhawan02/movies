@@ -63,30 +63,54 @@ function Movies() {
       return order === 'asc' ? -result : result;
     });
   };
- const franchises = [
+  const franchises = [
     { name: 'Marvel', path: 'marvel-movies', file: 'movieInfo.csv' },
-    { name: 'DC', path: 'dc-movies', file: 'dcmovies.csv' },
-    { name: 'Fast & Furious', path: 'fast-saga', file: 'fast.csv' },
-    { name: 'Mission Impossible', path: 'mission-impossible', file: 'missionimpossible.csv' },
-    { name: 'Star Wars', path: 'star-wars', file: 'StarWars.csv' },
-    { name: 'Pixar', path: 'pixar', file: 'pixar.csv' },
-    { name: 'Harry Potter', path: 'harrypotter', file: 'harrypotter.csv' },
-    { name: 'Transformers', path: 'transformers', file: 'transformers.csv' },
-    { name: 'Godzilla', path: 'godzilla', file: 'godzilla.csv' },
-    { name: 'Rocky', path: 'rocky', file: 'rocky.csv' },
-    { name: 'Karate Kid', path: 'karate-kid', file: 'KarateKid.csv' },
-    { name: 'The Boys', path: 'theboys', file: 'theBoys.csv' },
-    { name: 'Despicable Me', path: 'despicable-me', file: 'despicableMe.csv' },
-    { name: 'Men in Black', path: 'meninblack', file: 'meninblack.csv' },
-    { name: 'Chipmunks', path: 'chipmunks', file: 'alvin.csv' },
-    { name: 'YRF Spy Universe', path: 'yrf-spy-universe', file: 'yrfSpyUniverse.csv' },
-    { name: 'Non-Franchise', path: '', file: 'NonFranchise.csv' }
+    { name: 'DC', path: 'dc-movies', file: 'dcmovies.csv' }
   ];
 
   useEffect(() => {
     const loadAllMovies = async () => {
-      const moviePromises = franchises.map(franchise => 
-        fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path ? franchise.path + '/' : ''}${franchise.file}`)
+      try {
+        // Load Marvel and DC from their separate files
+        const franchisePromises = franchises.map(franchise => 
+          fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path}/${franchise.file}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.text();
+            })
+            .then(csvText => {
+              return new Promise((resolve) => {
+                Papa.parse(csvText, {
+                  header: true,
+                  complete: (results) => {
+                    const moviesWithFranchise = results.data
+                      .filter(movie => {
+                        const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+                        const rating = movie['My Tier'] || movie['My Rating'];
+                        return name && name.trim() && rating && rating.trim() && 
+                               rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
+                      })
+                      .map(movie => ({
+                        ...movie,
+                        Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+                        franchise: franchise.name,
+                        franchisePath: franchise.path
+                      }));
+                    resolve(moviesWithFranchise);
+                  }
+                });
+              });
+            })
+            .catch(error => {
+              console.error(`Error loading ${franchise.name}:`, error);
+              return [];
+            })
+        );
+
+        // Load all other movies from AllMovies.csv
+        const allMoviesPromise = fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`)
           .then(response => {
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
@@ -102,14 +126,15 @@ function Movies() {
                     .filter(movie => {
                       const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
                       const rating = movie['My Tier'] || movie['My Rating'];
+                      const franchise = movie.Franchise || movie.franchise || 'Non-Franchise';
                       return name && name.trim() && rating && rating.trim() && 
                              rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
                     })
                     .map(movie => ({
                       ...movie,
                       Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
-                      franchise: franchise.name,
-                      franchisePath: franchise.path
+                      franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
+                      franchisePath: ''
                     }));
                   resolve(moviesWithFranchise);
                 }
@@ -117,19 +142,25 @@ function Movies() {
             });
           })
           .catch(error => {
-            console.error(`Error loading ${franchise.name}:`, error);
+            console.error('Error loading AllMovies:', error);
             return [];
-          })
-      );
+          });
 
-      const movieArrays = await Promise.all(moviePromises);
-      const combinedMovies = movieArrays.flat();
-      
-      const sortedMovies = sortMovies(combinedMovies, sortBy, sortOrder);
-      
-      setAllMovies(sortedMovies);
-      setFilteredMovies(sortedMovies);
-      setLoading(false);
+        const [franchiseMovies, allMovies] = await Promise.all([
+          Promise.all(franchisePromises),
+          allMoviesPromise
+        ]);
+        
+        const combinedMovies = [...franchiseMovies.flat(), ...allMovies];
+        const sortedMovies = sortMovies(combinedMovies, sortBy, sortOrder);
+        
+        setAllMovies(sortedMovies);
+        setFilteredMovies(sortedMovies);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading movies:', error);
+        setLoading(false);
+      }
     };
 
     loadAllMovies();
@@ -148,12 +179,13 @@ function Movies() {
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
     
-    if (movie.franchise === 'Non-Franchise') {
-      window.location.href = `/movies/non-franchise/movie/${movieName}`;
-    } else if (movie.franchise === 'The Boys') {
-      window.location.href = `/movies/${movie.franchisePath}/show/${movieName}`;
-    } else {
+    if (movie.franchise === 'Marvel') {
       window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else if (movie.franchise === 'DC') {
+      window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else {
+      // Route all other movies to NonFranchiseMoviePage
+      window.location.href = `/movies/non-franchise/movie/${movieName}`;
     }
   };
 
@@ -233,7 +265,7 @@ function Movies() {
               }}
             >
               <option value="" style={{ backgroundColor: '#333', color: 'white' }}>Select Franchise</option>
-              {[...new Set(allMovies.map(movie => movie.franchise))].filter(franchise => franchise !== 'Non-Franchise').sort().map(franchise => (
+              {[...new Set(allMovies.map(movie => movie.franchise))].filter(franchise => franchise !== 'Non-Franchise' && franchise !== 'N/A').sort().map(franchise => (
                 <option key={franchise} value={franchise} style={{ backgroundColor: '#333', color: 'white' }}>
                   {franchise}
                 </option>
@@ -309,23 +341,11 @@ function Movies() {
               <div className="movie-poster">
                 <img 
                   src={`${process.env.PUBLIC_URL || '.'}/posters/${
-                    movie.franchise === 'The Boys'
-                      ? movie.Name?.trim().toLowerCase().replace(/[:.?!'()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '-') + '.jpg'
-                      : movie.franchise === 'Non-Franchise'
-                      ? movie.Name?.trim().replace(/[\/:.?!()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
-                      : (
-                        movie.franchise === 'Marvel' 
-                          ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.franchise === 'Harry Potter'
-                          ? movie.Name?.trim().replace(/[:.?!']/g, '').replace(/\.\.\./g, '').replace(/-/g, '_').replace(/\s+/g, '_')
-                          : movie.franchise === 'Pixar'
-                          ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.franchise === 'DC'
-                          ? movie.Name?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.franchise === 'Star Wars'
-                          ? movie.Name?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.Name?.trim().replace(/[:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                      ) + '.png'
+                    movie.franchise === 'Marvel'
+                      ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
+                      : movie.franchise === 'DC'
+                      ? movie.Name?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
+                      : movie.Name?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
                   }`}
                   alt={`${movie.Name} poster`}
                   loading="lazy"
@@ -334,7 +354,7 @@ function Movies() {
                   }}
                   onError={(e) => {e.target.style.display = 'none'}}
                 />
-                {movie.franchise !== 'Non-Franchise' && (
+                {movie.franchise !== 'Non-Franchise' && movie.franchise !== 'N/A' && (
                   <span style={{
                     position: 'absolute',
                     top: '8px',

@@ -19,7 +19,7 @@ function NonFranchiseMoviePage() {
         const decodedTitle = decodeURIComponent(movieTitle);
         console.log('Loading details for movie:', decodedTitle);
         
-        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/NonFranchise.csv`);
+        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`);
         if (!response.ok) {
           throw new Error('Failed to load movie data');
         }
@@ -42,7 +42,8 @@ function NonFranchiseMoviePage() {
             if (foundMovie) {
               setMovie({
                 ...foundMovie,
-                Name: foundMovie['Name '] || foundMovie.Name || foundMovie.name || foundMovie.Movie || foundMovie.Title
+                Name: foundMovie['Name '] || foundMovie.Name || foundMovie.name || foundMovie.Movie || foundMovie.Title,
+                Franchise: foundMovie.Franchise || foundMovie.franchise
               });
             } else {
               setError('Movie not found');
@@ -301,8 +302,25 @@ function NonFranchiseMoviePage() {
                     </div>
                   )}
                   
+                  {/* Franchise */}
+                  {movie.Franchise && movie.Franchise !== 'N/A' && movie.Franchise !== 'Non-Franchise' && (
+                    <div style={{
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      padding: '10px 18px',
+                      borderRadius: '25px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      fontSize: '15px',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }}>
+                      <span style={{ opacity: 0.7 }}>Franchise:</span>
+                      <span style={{ fontWeight: 'bold' }}>{movie.Franchise}</span>
+                    </div>
+                  )}
+                  
                   {/* My Rating */}
-                  {movie['My Rating'] && (
+                  {movie['My Rating'] && movie['My Rating'] !== 'N/A' && movie['My Rating'] !== 'Not Watched' && (
                     <div style={{
                       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                       color: 'white',

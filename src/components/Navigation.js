@@ -30,11 +30,11 @@ function Navigation() {
             Home
           </Link>
           <Link 
-            to="/franchises" 
-            className={`nav-tab ${location.pathname === '/franchises' ? 'active' : ''}`}
+            to="/watchlist" 
+            className={`nav-tab ${location.pathname === '/watchlist' ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
-            Franchises
+            Watchlist
           </Link>
           <Link 
             to="/movies" 
