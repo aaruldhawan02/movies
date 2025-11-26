@@ -32,7 +32,8 @@ function Movies() {
       'Back To The Future': '#ff9500',
       'Now You See Me': '#9b59b6',
       'Sonic': '#3498db',
-      'Bollywood': '#e91e63'
+      'Bollywood': '#e91e63',
+      'Housefull': '#ff6b6b'
     };
     return colors[franchise] || '#667eea';
   };

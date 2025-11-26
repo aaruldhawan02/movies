@@ -8,6 +8,8 @@ function Home() {
   const [recentlyWatched, setRecentlyWatched] = useState([]);
   const [allMovies, setAllMovies] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [ratingFranchiseFilter, setRatingFranchiseFilter] = useState('');
+  const [tooltip, setTooltip] = useState({ show: false, text: '', x: 0, y: 0 });
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -36,7 +38,9 @@ function Home() {
       'Back To The Future': '#ff9500',
       'Now You See Me': '#9b59b6',
       'Sonic': '#3498db',
-      'Bollywood': '#e91e63'
+      'Bollywood': '#e91e63',
+      'Housefull': '#ff6b6b',
+      'Other': '#e67e22'
     };
     return colors[franchise] || '#667eea';
   };
@@ -51,13 +55,57 @@ function Home() {
 
   const getRatingDistribution = () => {
     const distribution = {};
-    allMovies.forEach(movie => {
-      const rating = movie['My Tier'] || movie['My Rating'];
-      if (rating && rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-') {
-        const numericRating = convertRatingToNumber(rating);
-        distribution[numericRating] = (distribution[numericRating] || 0) + 1;
+    const filteredMovies = ratingFranchiseFilter 
+      ? allMovies.filter(movie => movie.franchise === ratingFranchiseFilter)
+      : allMovies;
+      
+    // Get franchise counts to determine top 4 and overall order
+    const franchiseCounts = {};
+    filteredMovies.forEach(movie => {
+      const franchise = movie.franchise || 'Other';
+      if (franchise !== 'Non-Franchise' && franchise !== 'N/A') {
+        franchiseCounts[franchise] = (franchiseCounts[franchise] || 0) + 1;
       }
     });
+    
+    const topFranchises = Object.entries(franchiseCounts)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 4)
+      .map(([franchise]) => franchise);
+    
+    // Create overall franchise order (biggest to smallest)
+    const franchiseOrder = Object.entries(franchiseCounts)
+      .sort(([,a], [,b]) => b - a)
+      .map(([franchise]) => franchise);
+      
+    filteredMovies.forEach(movie => {
+      const rating = movie['My Tier'] || movie['My Rating'];
+      if (rating && rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-') {
+        let ratingKey;
+        // Use tier rankings only when Marvel or DC is selected as franchise filter
+        if ((ratingFranchiseFilter === 'Marvel' || ratingFranchiseFilter === 'DC') && (movie['My Tier'] || movie['My Rating'])) {
+          ratingKey = rating; // Use tier directly (SS, S, AA, etc.)
+        } else {
+          ratingKey = convertRatingToNumber(rating); // Convert to numeric
+        }
+        
+        if (!distribution[ratingKey]) {
+          distribution[ratingKey] = {};
+        }
+        let franchise = movie.franchise || 'Other';
+        if (franchise === 'Non-Franchise' || franchise === 'N/A') {
+          franchise = 'Other';
+        }
+        // Group smaller franchises as "Other" when showing all franchises
+        if (!ratingFranchiseFilter && !topFranchises.includes(franchise)) {
+          franchise = 'Other';
+        }
+        distribution[ratingKey][franchise] = (distribution[ratingKey][franchise] || 0) + 1;
+      }
+    });
+    
+    // Store franchise order for use in rendering
+    distribution._franchiseOrder = franchiseOrder;
     
     return Object.entries(distribution).sort(([a], [b]) => {
       return parseFloat(b) - parseFloat(a);
@@ -287,18 +335,68 @@ function Home() {
             border: '1px solid rgba(255,255,255,0.25)',
             boxShadow: '0 12px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1)'
           }}>
-            <h3 style={{ 
-              textAlign: 'center', 
-              color: 'white', 
-              marginBottom: '50px',
-              fontSize: isMobile ? '20px' : '26px',
-              fontWeight: '700',
-              margin: '0 0 50px 0',
-              textShadow: '0 2px 8px rgba(0,0,0,0.4)',
-              letterSpacing: '0.5px'
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '50px'
             }}>
-              My Rating Distribution
-            </h3>
+              <h3 style={{ 
+                color: 'white', 
+                fontSize: isMobile ? '20px' : '26px',
+                fontWeight: '700',
+                margin: '0',
+                textShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                letterSpacing: '0.5px'
+              }}>
+                My Rating Distribution
+              </h3>
+              
+              <select 
+                value={ratingFranchiseFilter} 
+                onChange={(e) => setRatingFranchiseFilter(e.target.value)}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: '15px',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  backgroundColor: 'rgba(0,0,0,0.3)',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  outline: 'none',
+                  color: 'white',
+                  minWidth: '120px'
+                }}
+              >
+                <option value="" style={{ backgroundColor: '#333', color: 'white' }}>All Franchises</option>
+                {[...new Set(allMovies.map(movie => movie.franchise))].filter(franchise => franchise !== 'Non-Franchise' && franchise !== 'N/A').sort().map(franchise => (
+                  <option key={franchise} value={franchise} style={{ backgroundColor: '#333', color: 'white' }}>
+                    {franchise}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Tooltip below dropdown */}
+            <div style={{
+              textAlign: 'right',
+              marginBottom: '20px',
+              height: '20px'
+            }}>
+              <div style={{
+                display: 'inline-block',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                color: 'white',
+                padding: '4px 8px',
+                borderRadius: '4px',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap',
+                opacity: tooltip.show ? 1 : 0,
+                transition: 'opacity 0.2s ease'
+              }}>
+                {tooltip.text || 'Hover over chart segments'}
+              </div>
+            </div>
             <div style={{ 
               display: 'flex', 
               alignItems: 'end', 
@@ -307,10 +405,23 @@ function Home() {
               height: isMobile ? '100px' : '160px',
               padding: isMobile ? '0 5px' : '0 20px'
             }}>
-              {getRatingDistribution().map(([rating, count]) => {
-                const maxCount = Math.max(...getRatingDistribution().map(([, c]) => c));
-                const height = Math.max((count / maxCount) * (isMobile ? 60 : 110), 10);
-                const percentage = ((count / allMovies.length) * 100).toFixed(1);
+              {getRatingDistribution().map(([rating, franchiseData]) => {
+                if (rating === '_franchiseOrder') return null;
+                const totalCount = Object.values(franchiseData).reduce((sum, count) => sum + count, 0);
+                const maxCount = Math.max(...getRatingDistribution().map(([r, data]) => 
+                  r === '_franchiseOrder' ? 0 : Object.values(data).reduce((sum, count) => sum + count, 0)
+                ));
+                const height = Math.max((totalCount / maxCount) * (isMobile ? 60 : 110), 10);
+                const filteredMovies = ratingFranchiseFilter 
+                  ? allMovies.filter(movie => movie.franchise === ratingFranchiseFilter)
+                  : allMovies;
+                const percentage = ((totalCount / filteredMovies.length) * 100).toFixed(1);
+                
+                // Get overall franchise order
+                const distributionData = getRatingDistribution();
+                const franchiseOrderEntry = distributionData.find(([r]) => r === '_franchiseOrder');
+                const franchiseOrder = franchiseOrderEntry ? franchiseOrderEntry[1] : [];
+                
                 return (
                   <div key={rating} style={{ 
                     display: 'flex', 
@@ -326,7 +437,7 @@ function Home() {
                       fontWeight: '700',
                       textShadow: '0 1px 3px rgba(0,0,0,0.6)'
                     }}>
-                      {count}
+                      {totalCount}
                     </div>
                     <div style={{
                       fontSize: isMobile ? '8px' : '11px',
@@ -339,32 +450,44 @@ function Home() {
                     <div style={{
                       width: isMobile ? '20px' : '42px',
                       height: `${height}px`,
-                      background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)',
                       borderRadius: '8px 8px 4px 4px',
                       transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                       cursor: 'pointer',
                       boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4), 0 2px 8px rgba(0,0,0,0.2)',
                       position: 'relative',
-                      overflow: 'hidden'
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.transform = 'translateY(-4px) scale(1.08)';
-                      e.target.style.boxShadow = '0 12px 30px rgba(102, 126, 234, 0.6), 0 4px 12px rgba(0,0,0,0.3)';
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.transform = 'translateY(0) scale(1)';
-                      e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4), 0 2px 8px rgba(0,0,0,0.2)';
-                    }}
-                    >
-                      <div style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: '35%',
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%)',
-                        borderRadius: '8px 8px 0 0'
-                      }} />
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column-reverse'
+                    }}>
+                      {Object.entries(franchiseData)
+                        .sort(([a], [b]) => {
+                          const aIndex = franchiseOrder.indexOf(a);
+                          const bIndex = franchiseOrder.indexOf(b);
+                          return aIndex - bIndex; // Biggest first, but column-reverse will put them at bottom
+                        })
+                        .map(([franchise, count], index) => {
+                        const segmentHeight = (count / totalCount) * height;
+                        return (
+                          <div
+                            key={franchise}
+                            style={{
+                              height: `${segmentHeight}px`,
+                              backgroundColor: getFranchiseColor(franchise),
+                              position: 'relative',
+                              cursor: 'pointer'
+                            }}
+                            onMouseEnter={() => {
+                              setTooltip({
+                                show: true,
+                                text: `${franchise}: ${count} movies`,
+                                x: 0,
+                                y: 0
+                              });
+                            }}
+                            onMouseLeave={() => setTooltip({ show: false, text: '', x: 0, y: 0 })}
+                          />
+                        );
+                      })}
                     </div>
                     <div style={{
                       fontSize: isMobile ? '10px' : '15px',
