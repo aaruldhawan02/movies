@@ -63,8 +63,14 @@ function NonFranchiseMoviePage() {
     }
   }, [movieTitle]);
 
-  const getPosterFilename = (title) => {
-    return title?.trim().replace(/[\/:.?!()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+  const getPosterFilename = (title, franchise) => {
+    if (franchise === 'Marvel') {
+      return title?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    } else if (franchise === 'DC') {
+      return title?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    } else {
+      return title?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    }
   };
 
   const handlePosterError = () => {
@@ -204,7 +210,7 @@ function NonFranchiseMoviePage() {
                   transition: 'transform 0.3s ease'
                 }}>
                   <img 
-                    src={`${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name)}.png`}
+                    src={`${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name, movie.Franchise)}.png`}
                     alt={`${movie.Name} poster`}
                     onError={handlePosterError}
                     style={{

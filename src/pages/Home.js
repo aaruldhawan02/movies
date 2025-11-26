@@ -25,14 +25,18 @@ function Home() {
       'Pixar': '#00a8cc',
       'Harry Potter': '#740001',
       'Transformers': '#1e3a8a',
-      'Godzilla': '#16a085',
+      'Monsterverse': '#16a085',
       'Rocky': '#e74c3c',
       'Karate Kid': '#f39c12',
       'The Boys': '#000000',
       'Despicable Me': '#f1c40f',
       'Men in Black': '#2c3e50',
       'Chipmunks': '#e67e22',
-      'YRF Spy Universe': '#8e44ad'
+      'YRF Spy Universe': '#8e44ad',
+      'Back To The Future': '#ff9500',
+      'Now You See Me': '#9b59b6',
+      'Sonic': '#3498db',
+      'Bollywood': '#e91e63'
     };
     return colors[franchise] || '#667eea';
   };
@@ -481,11 +485,14 @@ function Home() {
                         backdropFilter: 'blur(4px)'
                       }}>
                         {movie.franchise === 'Fast & Furious' ? 'F&F' : 
-                         movie.franchise === 'Mission Impossible' ? 'MI' :
-                         movie.franchise === 'YRF Spy Universe' ? 'YRF' :
-                         movie.franchise === 'Men in Black' ? 'MIB' :
-                         movie.franchise === 'Despicable Me' ? 'DM' :
-                         movie.franchise}
+                          movie.franchise === 'Mission Impossible' ? 'MI' :
+                          movie.franchise === 'YRF Spy Universe' ? 'YRF' :
+                          movie.franchise === 'Men in Black' ? 'MIB' :
+                          movie.franchise === 'Despicable Me' ? 'DM' :
+                          movie.franchise === 'Back To The Future' ? 'BTTF' :
+                          movie.franchise === 'Now You See Me' ? 'NYSM' :
+                          movie.franchise === 'Monsterverse' ? 'MV' :
+                          movie.franchise}
                       </span>
                     )}
                     {(movie['My Tier'] || movie['My Rating']) && (
