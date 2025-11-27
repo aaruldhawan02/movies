@@ -40,7 +40,8 @@ function Home() {
       'Sonic': '#3498db',
       'Bollywood': '#e91e63',
       'Housefull': '#ff6b6b',
-      'Other': '#e67e22'
+      'Other': '#e67e22',
+      'Stranger Things': '#c0392b'
     };
     return colors[franchise] || '#667eea';
   };

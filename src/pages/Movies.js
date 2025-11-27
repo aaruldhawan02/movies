@@ -33,7 +33,8 @@ function Movies() {
       'Now You See Me': '#9b59b6',
       'Sonic': '#3498db',
       'Bollywood': '#e91e63',
-      'Housefull': '#ff6b6b'
+      'Housefull': '#ff6b6b',
+      'Stranger Things': '#c0392b'
     };
     return colors[franchise] || '#667eea';
   };

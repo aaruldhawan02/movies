@@ -32,6 +32,7 @@ function Watchlist() {
       'Sonic': '#3498db',
       'Bollywood': '#e91e63',
       'Housefull': '#ff6b6b',
+      'Stranger Things': '#c0392b',
       'Back To The Future': '#ff9500',
       'Now You See Me': '#9b59b6',
       'Sonic': '#3498db',
