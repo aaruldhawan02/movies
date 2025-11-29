@@ -275,12 +275,13 @@ function Home() {
   const handleMovieClick = (movie) => {
     const movieName = encodeURIComponent(movie.Name);
     
-    if (movie.franchise === 'Non-Franchise') {
-      window.location.href = `/movies/non-franchise/movie/${movieName}`;
-    } else if (movie.franchise === 'The Boys') {
-      window.location.href = `/movies/${movie.franchisePath}/show/${movieName}`;
-    } else {
+    if (movie.franchise === 'Marvel') {
       window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else if (movie.franchise === 'DC') {
+      window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else {
+      // Route all other movies to NonFranchiseMoviePage
+      window.location.href = `/movies/non-franchise/movie/${movieName}`;
     }
   };
 
