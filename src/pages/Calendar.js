@@ -163,7 +163,7 @@ function Calendar() {
         <p className="hero-subtitle">Track when you watched I watched movies</p>
       </div>
       
-      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
+      <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
         {/* Calendar Header */}
         <div style={{
           display: 'flex',
@@ -213,11 +213,14 @@ function Calendar() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: '15px',
-          backgroundColor: 'rgba(255,255,255,0.02)',
-          padding: '40px',
-          borderRadius: '25px',
-          marginBottom: '20px'
+          gap: '12px',
+          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15))',
+          padding: '25px',
+          borderRadius: '24px',
+          marginBottom: '20px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          backdropFilter: 'blur(10px)'
         }}>
           {/* Day headers */}
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
@@ -239,14 +242,23 @@ function Calendar() {
         {/* Selected Date Movies */}
         {selectedDate && selectedMovies.length > 0 && (
           <div style={{
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            padding: '20px',
-            borderRadius: '10px'
+            background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15))',
+            padding: '30px',
+            borderRadius: '24px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            backdropFilter: 'blur(10px)'
           }}>
             <h3 style={{ 
               color: 'white', 
-              marginBottom: '15px',
-              fontSize: '20px'
+              marginBottom: '25px',
+              fontSize: '24px',
+              fontWeight: '600',
+              textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(135deg, #667eea, #764ba2)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
             }}>
               Movies watched on {selectedDate.toLocaleDateString('en-US', { 
                 weekday: 'long', 
@@ -287,11 +299,14 @@ function Calendar() {
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            background-color: rgba(255,255,255,0.02);
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
             border-radius: 20px;
             position: relative;
-            transition: all 0.2s ease;
-            padding: 12px 4px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 10px 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            overflow: hidden;
           }
           
           .calendar-day.no-movies {
@@ -303,14 +318,21 @@ function Calendar() {
           }
           
           .calendar-day.has-movies {
-            background-color: rgba(102, 126, 234, 0.3);
-            border: 2px solid rgba(102, 126, 234, 0.5);
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.2));
+            border: 1px solid rgba(102, 126, 234, 0.5);
             border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
           }
           
           .calendar-day.has-movies:hover {
-            background-color: rgba(102, 126, 234, 0.5);
-            transform: scale(1.05);
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.3));
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4), 0 0 30px rgba(102, 126, 234, 0.2);
+          }
+          
+          .calendar-day:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
           }
           
           .calendar-day.selected {
