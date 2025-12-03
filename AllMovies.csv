@@ -1,5 +1,6 @@
 Name ,Franchise,Watch Date,Release Date,Critic Rating,Audience Rating,My Rating,Trailer
 Stranger Things Season 5,Stranger Things,N/A,11/26/2025,N/A,N/A,N/A,https://www.youtube.com/watch?v=D8Qxxq0Oh9M
+Dhoom 2,Bollywood,12/2/2025,11/24/2006,93%,77%,4.5/5,
 Stranger Things Season 4,Stranger Things,11/27/2025,5/27/2022,89%,89%,4/5,https://www.youtube.com/watch?v=a3thyAnShck
 Stranger Things Season 3,Stranger Things,11/25/2025,7/4/2019,89%,86%,4/5,https://www.youtube.com/watch?v=6Am4v0C_z8c
 Stranger Things Season 2,Stranger Things,11/24/2025,10/27/2017,94%,90%,3.5/5,https://www.youtube.com/watch?v=R1ZXOOLMJ8s
@@ -188,7 +189,7 @@ Murder Mystery,N/A,N/A,6/14/2019,43%,47%,2.5/5,
 Murder Mystery 2,N/A,N/A,3/31/2023,46%,45%,2.5/5,
 Episode I: The Phantom Menace,Star Wars,N/A,5/19/1999,54%,59%,2/5,https://www.youtube.com/watch?v=bD7bpG-zDJQ
 Episode II: Attack of the Clones,Star Wars,N/A,5/16/2002,61%,56%,3/5,https://www.youtube.com/watch?v=gYbW1F_c9eM
-Episode III: Revenge of the Sith,Star Wars,N/A,5/19/2005,79%,66%,3.5/5,https://www.youtube.com/watch?v=5UnjrG_N8hU
+Episode III: Revenge of the Sith,Star Wars,4/30/2025,5/19/2005,79%,66%,3.5/5,https://www.youtube.com/watch?v=5UnjrG_N8hU
 Episode IV: A New Hope,Star Wars,N/A,5/25/1977,94%,96%,4.5/5,https://www.youtube.com/watch?v=vZ734NWnAHA
 Episode V: The Empire Strikes Back,Star Wars,N/A,5/21/1980,93%,97%,5/5,https://www.youtube.com/watch?v=JNwNXF9Y6kY
 Episode VI: Return of the Jedi,Star Wars,N/A,5/25/1983,84%,94%,4.5/5,https://www.youtube.com/watch?v=7L8p7_SLzvU
@@ -229,20 +230,20 @@ Tiger Zinda Hai,YRF Spy Universe,N/A,12/22/2017,64%,67%,2.5/5,https://www.youtub
 War,YRF Spy Universe,N/A,10/2/2019,67%,80%,3.5/5,https://www.youtube.com/watch?v=tQ0mzXRk-oM
 Pathaan,YRF Spy Universe,N/A,1/25/2023,82%,78%,3/5,https://www.youtube.com/watch?v=vqu4z34wENw
 Tiger 3,YRF Spy Universe,N/A,11/12/2023,55%,69%,1.5/5,https://www.youtube.com/watch?v=vEjTUDjjU6A
-War 2,YRF Spy Universe,N/A,8/14/2025,N/A,N/A,1/5,https://www.youtube.com/watch?v=mjBym9uKth4
+War 2,YRF Spy Universe,8/13/2025,8/14/2025,N/A,N/A,1/5,https://www.youtube.com/watch?v=mjBym9uKth4
 Alpha,YRF Spy Universe,N/A,12/25/2025,N/A,N/A,N/A,N/A
 Alvin and the Chipmunks,Chipmunks,N/A,12/14/2007,28%,64%,3.5/5,https://www.youtube.com/watch?v=sc-C8uumMkw
 Alvin and the Chipmunks: The Squeakquel,Chipmunks,N/A,12/23/2009,21%,49%,2.5/5,https://www.youtube.com/watch?v=HwVzCtRvcyY
 Alvin and the Chipmunks: Chipwrecked,Chipmunks,N/A,12/16/2011,10%,51%,4/5,https://www.youtube.com/watch?v=-dOc_fqmcZo
 Alvin and the Chipmunks: The Road Chip,Chipmunks,N/A,12/18/2015,16%,51%,1/5,https://www.youtube.com/watch?v=0BwLNc1KyDQ
-Mission Impossible,Mission Impossible,N/A,5/22/1996,65%,71%,4/5,https://www.youtube.com/watch?v=L8Pbjh4EZRk
-Mission Impossible 2,Mission Impossible,N/A,5/24/2000,57%,42%,2.5/5,https://www.youtube.com/watch?v=HwXbmwTvoT4
-Mission Impossible III,Mission Impossible,N/A,5/5/2006,73%,69%,3.5/5,https://www.youtube.com/watch?v=4oVva0muTE8
-Mission Impossible: Ghost Protocol,Mission Impossible,N/A,12/21/2011,94%,76%,4.5/5,https://www.youtube.com/watch?v=m31C9DofmSo
-Mission Impossible: Rogue Nation,Mission Impossible,N/A,7/31/2015,94%,87%,4/5,https://www.youtube.com/watch?v=gOW_azQbOjw
-Mission Impossible: Fallout,Mission Impossible,N/A,7/27/2018,98%,89%,4/5,https://www.youtube.com/watch?v=wb49-oV0F78
-Mission Impossible: Dead Reckoning,Mission Impossible,N/A,7/12/2023,96%,94%,3.5/5,https://www.youtube.com/watch?v=avz06PDqDbM
-Mission Impossible: Final Reckoning,Mission Impossible,N/A,5/23/2025,80%,88%,3.5/5,https://www.youtube.com/watch?v=fsQgc9pCyDU
+Mission Impossible,Mission Impossible,5/21/2025,5/22/1996,65%,71%,4/5,https://www.youtube.com/watch?v=L8Pbjh4EZRk
+Mission Impossible 2,Mission Impossible,5/21/2025,5/24/2000,57%,42%,2.5/5,https://www.youtube.com/watch?v=HwXbmwTvoT4
+Mission Impossible III,Mission Impossible,5/22/2025,5/5/2006,73%,69%,3.5/5,https://www.youtube.com/watch?v=4oVva0muTE8
+Mission Impossible: Ghost Protocol,Mission Impossible,5/23/2025,12/21/2011,94%,76%,4.5/5,https://www.youtube.com/watch?v=m31C9DofmSo
+Mission Impossible: Rogue Nation,Mission Impossible,5/23/2025,7/31/2015,94%,87%,4/5,https://www.youtube.com/watch?v=gOW_azQbOjw
+Mission Impossible: Fallout,Mission Impossible,5/24/2025,7/27/2018,98%,89%,4/5,https://www.youtube.com/watch?v=wb49-oV0F78
+Mission Impossible: Dead Reckoning,Mission Impossible,5/24/2025,7/12/2023,96%,94%,3.5/5,https://www.youtube.com/watch?v=avz06PDqDbM
+Mission Impossible: Final Reckoning,Mission Impossible,5/25/2025,5/23/2025,80%,88%,3.5/5,https://www.youtube.com/watch?v=fsQgc9pCyDU
 Rocky,Rocky,N/A,12/3/1976,93%,69%,3.5/5,https://www.youtube.com/watch?v=-Hk-LYcavrw
 Rocky II,Rocky,N/A,6/15/1979,70%,82%,4/5,https://www.youtube.com/watch?v=A2P9ATb9Qx8
 Rocky III,Rocky,N/A,5/28/1982,65%,74%,3/5,https://www.youtube.com/watch?v=o7vbDPUMWDc
@@ -328,7 +329,7 @@ Cobra Kai Season 3,Karate Kid,N/A,1/1/2021,90%,91%,3/5,https://www.youtube.com/w
 Cobra Kai Season 4,Karate Kid,N/A,12/31/2021,95%,91%,4.5/5,https://www.youtube.com/watch?v=PIKGVR73raA
 Cobra Kai Season 5,Karate Kid,N/A,9/9/22,98%,92%,4/5,https://www.youtube.com/watch?v=P4BfK1LKbCY
 Cobra Kai Season 6,Karate Kid,N/A,7/18/24,91%,80%,3.5/5,https://www.youtube.com/watch?v=m0aa_JaA-c8
-Karate Kid: Legends,Karate Kid,N/A,5/30/2025,58%,91%,3/5,https://www.youtube.com/watch?v=uPzOyzsnmio
+Karate Kid: Legends,Karate Kid,6/1/2025,5/30/2025,58%,91%,3/5,https://www.youtube.com/watch?v=uPzOyzsnmio
 That's My Boy,N/A,N/A,6/15/2012,20%,51%,3/5,
 Khel Khel Mein,Bollywood,N/A,8/15/2024,78%,N/A,2/5,
 Tu Jhooti Main Makkar,Bollywood,N/A,3/8/2023,33%,62%,3.5/5,
@@ -339,7 +340,6 @@ White Men Can't Jump,N/A,N/A,5/11/2023,26%,59%,3.5/5,
 Dune Part Two,N/A,N/A,3/1/2024,92%,95%,N/A,
 Pride and Prejudice,N/A,N/A,11/11/2005,87%,90%,N/A,
 Dhoom,Bollywood,N/A,8/27/2004,N/A,76%,4/5,
-Dhoom 2,Bollywood,N/A,11/24/2006,93%,77%,4.5/5,
 Dhoom 3,Bollywood,N/A,12/20/2013,67%,49%,3/5,
 Housefull,Housefull,N/A,4/30/2010,N/A,25%,2.5/5,
 Housefull 2,Housefull,N/A,4/6/2012,25%,47%,3.5/5,
