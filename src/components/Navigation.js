@@ -30,6 +30,13 @@ function Navigation() {
             Home
           </Link>
           <Link 
+            to="/calendar" 
+            className={`nav-tab ${location.pathname === '/calendar' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Calendar
+          </Link>
+          <Link 
             to="/watchlist" 
             className={`nav-tab ${location.pathname === '/watchlist' ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}

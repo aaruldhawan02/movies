@@ -1,0 +1,348 @@
+import React, { useState, useEffect } from 'react';
+import Papa from 'papaparse';
+import Navigation from '../components/Navigation';
+
+function Calendar() {
+  const [watchedMovies, setWatchedMovies] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadWatchedMovies = async () => {
+      try {
+        // Load from AllMovies.csv
+        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`);
+        if (!response.ok) throw new Error('Failed to load data');
+        
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true,
+          complete: (results) => {
+            const movies = results.data
+              .filter(movie => {
+                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+                const watchDate = movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate;
+                return name && name.trim() && watchDate && watchDate !== 'N/A' && watchDate.trim();
+              })
+              .map(movie => ({
+                ...movie,
+                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+                WatchDate: movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate,
+                franchise: movie.Franchise || movie.franchise || 'Other'
+              }));
+            
+            setWatchedMovies(movies);
+            setLoading(false);
+          }
+        });
+      } catch (error) {
+        console.error('Error loading watched movies:', error);
+        setLoading(false);
+      }
+    };
+
+    loadWatchedMovies();
+  }, []);
+
+  const getMoviesForDate = (date) => {
+    const dateStr = date.toLocaleDateString('en-US', { 
+      month: '2-digit', 
+      day: '2-digit', 
+      year: 'numeric' 
+    });
+    
+    return watchedMovies.filter(movie => {
+      const movieDate = new Date(movie.WatchDate);
+      const movieDateStr = movieDate.toLocaleDateString('en-US', { 
+        month: '2-digit', 
+        day: '2-digit', 
+        year: 'numeric' 
+      });
+      return movieDateStr === dateStr;
+    });
+  };
+
+  const getPosterFilename = (title, franchise) => {
+    if (franchise === 'Marvel') {
+      return title?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    } else if (franchise === 'DC') {
+      return title?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    } else {
+      return title?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_');
+    }
+  };
+
+  const getDaysInMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const changeMonth = (direction) => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + direction, 1));
+  };
+
+  const handleMovieClick = (movie) => {
+    const movieName = encodeURIComponent(movie.Name);
+    
+    if (movie.franchise === 'Marvel') {
+      window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else if (movie.franchise === 'DC') {
+      window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
+    } else {
+      window.location.href = `/movies/non-franchise/movie/${movieName}`;
+    }
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentDate);
+    const firstDay = getFirstDayOfMonth(currentDate);
+    const days = [];
+    
+    // Empty cells for days before the first day of the month
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+    }
+    
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      const moviesOnDate = getMoviesForDate(date);
+      const hasMovies = moviesOnDate.length > 0;
+      
+      days.push(
+        <div 
+          key={day} 
+          className={`calendar-day ${hasMovies ? 'has-movies' : 'no-movies'} ${selectedDate && selectedDate.getDate() === day && selectedDate.getMonth() === currentDate.getMonth() ? 'selected' : ''}`}
+          onClick={() => setSelectedDate(hasMovies ? date : null)}
+          style={{
+            cursor: hasMovies ? 'pointer' : 'default',
+            backgroundImage: hasMovies ? `url(${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(moviesOnDate[0].Name, moviesOnDate[0].franchise)}.png)` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {!hasMovies && <span className="day-number">{day}</span>}
+          {hasMovies && (
+            <>
+              <div className="date-bubble">{day}</div>
+              {moviesOnDate.length > 1 && (
+                <div className="movie-count">{moviesOnDate.length}</div>
+              )}
+            </>
+          )}
+        </div>
+      );
+    }
+    
+    return days;
+  };
+
+  if (loading) {
+    return (
+      <div className="App">
+        <Navigation />
+        <div className="loading-container">
+          <h2>Loading calendar...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  const selectedMovies = selectedDate ? getMoviesForDate(selectedDate) : [];
+
+  return (
+    <div className="App" style={{ fontFamily: "'Arial', sans-serif" }}>
+      <Navigation />
+      <div className="hero-section">
+        <h1 className="hero-title">Movie Calendar</h1>
+        <p className="hero-subtitle">Track when you watched I watched movies</p>
+      </div>
+      
+      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
+        {/* Calendar Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          padding: '15px 20px',
+          borderRadius: '10px'
+        }}>
+          <button 
+            onClick={() => changeMonth(-1)}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '20px',
+              cursor: 'pointer',
+              padding: '5px 10px'
+            }}
+          >
+            ←
+          </button>
+          <h2 style={{ 
+            color: 'white', 
+            margin: 0,
+            fontSize: '24px'
+          }}>
+            {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          </h2>
+          <button 
+            onClick={() => changeMonth(1)}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '20px',
+              cursor: 'pointer',
+              padding: '5px 10px'
+            }}
+          >
+            →
+          </button>
+        </div>
+
+        {/* Calendar Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(7, 1fr)',
+          gap: '15px',
+          backgroundColor: 'rgba(255,255,255,0.02)',
+          padding: '40px',
+          borderRadius: '25px',
+          marginBottom: '20px'
+        }}>
+          {/* Day headers */}
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+            <div key={day} style={{
+              padding: '10px',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '14px'
+            }}>
+              {day}
+            </div>
+          ))}
+          
+          {/* Calendar days */}
+          {renderCalendar()}
+        </div>
+
+        {/* Selected Date Movies */}
+        {selectedDate && selectedMovies.length > 0 && (
+          <div style={{
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            padding: '20px',
+            borderRadius: '10px'
+          }}>
+            <h3 style={{ 
+              color: 'white', 
+              marginBottom: '15px',
+              fontSize: '20px'
+            }}>
+              Movies watched on {selectedDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </h3>
+            <div className="movies-grid">
+              {selectedMovies.map((movie, index) => (
+                <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
+                  <div className="movie-poster">
+                    <img 
+                      src={`${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name, movie.franchise)}.png`}
+                      alt={`${movie.Name} poster`}
+                      loading="lazy"
+                      onError={(e) => {e.target.style.display = 'none'}}
+                    />
+                  </div>
+                  <div className="movie-info">
+                    <h3 className="movie-title">{movie.Name}</h3>
+                    {movie['My Rating'] && movie['My Rating'] !== 'N/A' && (
+                      <div className="rating">
+                        <span>My Rating: {movie['My Rating']}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <style jsx>{`
+          .calendar-day {
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.2s ease;
+            padding: 12px 4px;
+          }
+          
+          .calendar-day.no-movies {
+            justify-content: center;
+          }
+          
+          .calendar-day.empty {
+            background-color: transparent;
+          }
+          
+          .calendar-day.has-movies {
+            background-color: rgba(102, 126, 234, 0.3);
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            border-radius: 20px;
+          }
+          
+          .calendar-day.has-movies:hover {
+            background-color: rgba(102, 126, 234, 0.5);
+            transform: scale(1.05);
+          }
+          
+          .calendar-day.selected {
+            background-color: rgba(102, 126, 234, 0.7) !important;
+            border: 2px solid #667eea !important;
+          }
+          
+          .day-number {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          
+          .movie-indicator {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background-color: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+          }
+        `}</style>
+      </main>
+    </div>
+  );
+}
+
+export default Calendar;
