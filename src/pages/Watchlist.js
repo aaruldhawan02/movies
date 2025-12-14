@@ -63,6 +63,9 @@ function Watchlist() {
                       return name && name.trim() && 
                              (rating === 'N/A' || rating === 'Not Watched' || !rating || rating.trim() === '') &&
                              franchise !== 'Marvel' && franchise !== 'DC' && franchise !== 'Pixar' &&
+                             franchise !== 'Star Wars' && franchise !== 'Transformers' && 
+                             franchise !== 'The Boys' && franchise !== 'Monsterverse' &&
+                             franchise !== 'Karate Kid' &&
                              releaseDate <= currentDate; // Only include released movies
                     })
                     .map(movie => ({
