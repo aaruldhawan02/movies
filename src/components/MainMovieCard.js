@@ -35,6 +35,12 @@ const MainMovieCard = ({ movie, onClick, showRating = true, showFranchise = true
   };
 
   const getPosterSrc = () => {
+    // Use Google Sheets URL if available
+    if (movie['Poster Url'] && movie['Poster Url'].trim()) {
+      return movie['Poster Url'];
+    }
+    
+    // Fallback to existing logic
     if (movie.franchise === 'Marvel') {
       return `${process.env.PUBLIC_URL || '.'}/posters/${movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')}.png`;
     } else if (movie.franchise === 'DC') {

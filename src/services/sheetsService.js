@@ -9,15 +9,10 @@ let cachedMovieData = null;
  * @returns {Promise<Array>} Array of movie objects matching CSV structure
  */
 export const fetchAllMoviesFromSheets = async () => {
-  // Return cached data if available
-  if (cachedMovieData) {
-    console.log('Using cached movie data from sheets');
-    return cachedMovieData;
-  }
-
   try {
-    // Use Google Sheets CSV export URL (requires sheet to be public)
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+    // Use Google Sheets CSV export URL with cache busting
+    const timestamp = new Date().getTime();
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0&t=${timestamp}`;
     
     console.log('Fetching from Google Sheets CSV export...');
     const response = await fetch(csvUrl);
@@ -47,10 +42,8 @@ export const fetchAllMoviesFromSheets = async () => {
         return movie;
       });
     
-    // Cache the result
-    cachedMovieData = movieData;
-    
     console.log(`Loaded ${movieData.length} movies from Google Sheets`);
+    console.log('Headers found:', headers);
     return movieData;
     
   } catch (error) {

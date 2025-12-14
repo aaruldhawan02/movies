@@ -64,6 +64,16 @@ function NonFranchiseMoviePage() {
     }
   };
 
+  const getPosterSrc = () => {
+    // Use Google Sheets URL if available
+    if (movie['Poster Url'] && movie['Poster Url'].trim()) {
+      return movie['Poster Url'];
+    }
+    
+    // Fallback to existing logic
+    return `${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name, movie.Franchise)}.png`;
+  };
+
   const handlePosterError = () => {
     setPosterError(true);
   };
@@ -201,7 +211,7 @@ function NonFranchiseMoviePage() {
                   transition: 'transform 0.3s ease'
                 }}>
                   <img 
-                    src={`${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name, movie.Franchise)}.png`}
+                    src={getPosterSrc()}
                     alt={`${movie.Name} poster`}
                     onError={handlePosterError}
                     style={{
