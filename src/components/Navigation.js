@@ -50,6 +50,13 @@ function Navigation() {
           >
             Movies
           </Link>
+          <Link 
+            to="/privacy-policy" 
+            className={`nav-tab ${location.pathname === '/privacy-policy' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </nav>
