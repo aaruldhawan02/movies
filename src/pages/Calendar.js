@@ -208,9 +208,9 @@ function Calendar() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: '12px',
+          gap: window.innerWidth <= 480 ? '2px' : window.innerWidth <= 768 ? '6px' : '12px',
           background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15))',
-          padding: '25px',
+          padding: window.innerWidth <= 480 ? '10px' : window.innerWidth <= 768 ? '15px' : '25px',
           borderRadius: '24px',
           marginBottom: '20px',
           boxShadow: '0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
@@ -285,6 +285,24 @@ function Calendar() {
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
             overflow: hidden;
+          }
+          
+          @media (max-width: 768px) {
+            .calendar-day {
+              min-height: 100px;
+              padding: 4px 2px;
+              border-radius: 12px;
+              font-size: 12px;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .calendar-day {
+              min-height: 70px;
+              padding: 2px 1px;
+              border-radius: 8px;
+              font-size: 10px;
+            }
           }
           
           .calendar-day.no-movies {
