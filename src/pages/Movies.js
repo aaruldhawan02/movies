@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import Navigation from '../components/Navigation';
+import MainMovieCard from '../components/MainMovieCard';
+import { loadAllMovies as loadMoviesData } from '../services/dataService';
 
 function Movies() {
   const [allMovies, setAllMovies] = useState([]);
@@ -115,37 +117,24 @@ function Movies() {
             })
         );
 
-        // Load all other movies from AllMovies.csv
-        const allMoviesPromise = fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .then(csvText => {
-            return new Promise((resolve) => {
-              Papa.parse(csvText, {
-                header: true,
-                complete: (results) => {
-                  const moviesWithFranchise = results.data
-                    .filter(movie => {
-                      const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
-                      const rating = movie['My Tier'] || movie['My Rating'];
-                      const franchise = movie.Franchise || movie.franchise || 'Non-Franchise';
-                      return name && name.trim() && rating && rating.trim() && 
-                             rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
-                    })
-                    .map(movie => ({
-                      ...movie,
-                      Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
-                      franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
-                      franchisePath: ''
-                    }));
-                  resolve(moviesWithFranchise);
-                }
-              });
-            });
+        // Load all other movies from Google Sheets or CSV
+        const allMoviesPromise = loadMoviesData()
+          .then(data => {
+            const moviesWithFranchise = data
+              .filter(movie => {
+                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+                const rating = movie['My Tier'] || movie['My Rating'];
+                const franchise = movie.Franchise || movie.franchise || 'Non-Franchise';
+                return name && name.trim() && rating && rating.trim() && 
+                       rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
+              })
+              .map(movie => ({
+                ...movie,
+                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+                franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
+                franchisePath: ''
+              }));
+            return moviesWithFranchise;
           })
           .catch(error => {
             console.error('Error loading AllMovies:', error);
@@ -341,78 +330,13 @@ function Movies() {
       </div>
       
       <main className="movies-container">
-        <div className="movies-grid">
+        <div className="movies-page-grid">
           {filteredMovies.map((movie, index) => (
-            <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
-              <div className="movie-poster">
-                <img 
-                  src={`${process.env.PUBLIC_URL || '.'}/posters/${
-                    movie.franchise === 'Marvel'
-                      ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
-                      : movie.franchise === 'DC'
-                      ? movie.Name?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
-                      : movie.Name?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_') + '.png'
-                  }`}
-                  alt={`${movie.Name} poster`}
-                  loading="lazy"
-                  style={{
-                    backgroundColor: '#2a2a2a',
-                  }}
-                  onError={(e) => {e.target.style.display = 'none'}}
-                />
-                {movie.franchise !== 'Non-Franchise' && movie.franchise !== 'N/A' && (
-                  <span style={{
-                    position: 'absolute',
-                    top: '8px',
-                    left: '8px',
-                    backgroundColor: getFranchiseColor(movie.franchise),
-                    color: movie.franchise === 'Star Wars' ? '#000' : 'white',
-                    padding: '6px 10px',
-                    borderRadius: '16px',
-                    fontSize: '10px',
-                    fontWeight: '700',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.8px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                    border: movie.franchise === 'Star Wars' ? '1px solid rgba(0,0,0,0.2)' : 'none',
-                    backdropFilter: 'blur(4px)'
-                  }}>
-                    {movie.franchise === 'Fast & Furious' ? 'F&F' : 
-                     movie.franchise === 'Mission Impossible' ? 'MI' :
-                     movie.franchise === 'YRF Spy Universe' ? 'YRF' :
-                     movie.franchise === 'Men in Black' ? 'MIB' :
-                     movie.franchise === 'Despicable Me' ? 'DM' :
-                     movie.franchise === 'Back To The Future' ? 'BTTF' :
-                     movie.franchise === 'Now You See Me' ? 'NYSM' :
-                     movie.franchise === 'Monsterverse' ? 'MV' :
-                     movie.franchise}
-                  </span>
-                )}
-                {(movie['My Tier'] || movie['My Rating']) && (
-                  <span style={{
-                    position: 'absolute',
-                    bottom: '8px',
-                    right: '8px',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    padding: '5px 8px',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    zIndex: 3,
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
-                  }}>
-                    {movie['My Tier'] || movie['My Rating']}
-                  </span>
-                )}
-              </div>
-              <div className="movie-info">
-                <h3 className="movie-title">{movie.Name}</h3>
-                <div className="movie-details">
-                  <span className="movie-date">{movie['Release Date']}</span>
-                </div>
-              </div>
-            </div>
+            <MainMovieCard 
+              key={index} 
+              movie={movie} 
+              onClick={handleMovieClick}
+            />
           ))}
         </div>
       </main>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import Navigation from '../components/Navigation';
+import MainMovieCard from '../components/MainMovieCard';
+import { loadAllMovies } from '../services/dataService';
 
 function Calendar() {
   const [watchedMovies, setWatchedMovies] = useState([]);
@@ -11,31 +13,24 @@ function Calendar() {
   useEffect(() => {
     const loadWatchedMovies = async () => {
       try {
-        // Load from AllMovies.csv
-        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`);
-        if (!response.ok) throw new Error('Failed to load data');
+        // Load from Google Sheets or CSV
+        const data = await loadAllMovies();
         
-        const csvText = await response.text();
-        Papa.parse(csvText, {
-          header: true,
-          complete: (results) => {
-            const movies = results.data
-              .filter(movie => {
-                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
-                const watchDate = movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate;
-                return name && name.trim() && watchDate && watchDate !== 'N/A' && watchDate.trim();
-              })
-              .map(movie => ({
-                ...movie,
-                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
-                WatchDate: movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate,
-                franchise: movie.Franchise || movie.franchise || 'Other'
-              }));
-            
-            setWatchedMovies(movies);
-            setLoading(false);
-          }
-        });
+        const movies = data
+          .filter(movie => {
+            const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+            const watchDate = movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate;
+            return name && name.trim() && watchDate && watchDate !== 'N/A' && watchDate.trim();
+          })
+          .map(movie => ({
+            ...movie,
+            Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+            WatchDate: movie['Watch Date'] || movie['Watched Date'] || movie.WatchedDate,
+            franchise: movie.Franchise || movie.franchise || 'Other'
+          }));
+        
+        setWatchedMovies(movies);
+        setLoading(false);
       } catch (error) {
         console.error('Error loading watched movies:', error);
         setLoading(false);
@@ -160,7 +155,7 @@ function Calendar() {
       <Navigation />
       <div className="hero-section">
         <h1 className="hero-title">Movie Calendar</h1>
-        <p className="hero-subtitle">Track when you watched I watched movies</p>
+        <p className="hero-subtitle">Track when I watched my movies</p>
       </div>
       
       <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
@@ -242,12 +237,7 @@ function Calendar() {
         {/* Selected Date Movies */}
         {selectedDate && selectedMovies.length > 0 && (
           <div style={{
-            background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15))',
-            padding: '30px',
-            borderRadius: '24px',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            backdropFilter: 'blur(10px)'
+            margin: '20px 0'
           }}>
             <h3 style={{ 
               color: 'white', 
@@ -267,26 +257,13 @@ function Calendar() {
                 day: 'numeric' 
               })}
             </h3>
-            <div className="movies-grid">
+            <div className="movies-page-grid">
               {selectedMovies.map((movie, index) => (
-                <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
-                  <div className="movie-poster">
-                    <img 
-                      src={`${process.env.PUBLIC_URL || '.'}/posters/${getPosterFilename(movie.Name, movie.franchise)}.png`}
-                      alt={`${movie.Name} poster`}
-                      loading="lazy"
-                      onError={(e) => {e.target.style.display = 'none'}}
-                    />
-                  </div>
-                  <div className="movie-info">
-                    <h3 className="movie-title">{movie.Name}</h3>
-                    {movie['My Rating'] && movie['My Rating'] !== 'N/A' && (
-                      <div className="rating">
-                        <span>My Rating: {movie['My Rating']}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <MainMovieCard 
+                  key={index} 
+                  movie={movie} 
+                  onClick={handleMovieClick}
+                />
               ))}
             </div>
           </div>
@@ -295,6 +272,7 @@ function Calendar() {
         <style jsx>{`
           .calendar-day {
             aspect-ratio: 3/4;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -303,7 +281,7 @@ function Calendar() {
             border-radius: 20px;
             position: relative;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 10px 6px;
+            padding: 6px 4px;
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
             overflow: hidden;

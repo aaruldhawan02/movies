@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Papa from 'papaparse';
 import Navigation from '../components/Navigation';
+import MainMovieCard from '../components/MainMovieCard';
+import { loadAllMovies } from '../services/dataService';
 
 function Home() {
   const [recentMovies, setRecentMovies] = useState([]);
@@ -60,7 +62,6 @@ function Home() {
       ? allMovies.filter(movie => movie.franchise === ratingFranchiseFilter)
       : allMovies;
       
-    // Get franchise counts to determine top 4 and overall order
     const franchiseCounts = {};
     filteredMovies.forEach(movie => {
       const franchise = movie.franchise || 'Other';
@@ -74,7 +75,6 @@ function Home() {
       .slice(0, 4)
       .map(([franchise]) => franchise);
     
-    // Create overall franchise order (biggest to smallest)
     const franchiseOrder = Object.entries(franchiseCounts)
       .sort(([,a], [,b]) => b - a)
       .map(([franchise]) => franchise);
@@ -83,11 +83,10 @@ function Home() {
       const rating = movie['My Tier'] || movie['My Rating'];
       if (rating && rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-') {
         let ratingKey;
-        // Use tier rankings only when Marvel or DC is selected as franchise filter
         if ((ratingFranchiseFilter === 'Marvel' || ratingFranchiseFilter === 'DC') && (movie['My Tier'] || movie['My Rating'])) {
-          ratingKey = rating; // Use tier directly (SS, S, AA, etc.)
+          ratingKey = rating;
         } else {
-          ratingKey = convertRatingToNumber(rating); // Convert to numeric
+          ratingKey = convertRatingToNumber(rating);
         }
         
         if (!distribution[ratingKey]) {
@@ -97,7 +96,6 @@ function Home() {
         if (franchise === 'Non-Franchise' || franchise === 'N/A') {
           franchise = 'Other';
         }
-        // Group smaller franchises as "Other" when showing all franchises
         if (!ratingFranchiseFilter && !topFranchises.includes(franchise)) {
           franchise = 'Other';
         }
@@ -105,7 +103,6 @@ function Home() {
       }
     });
     
-    // Store franchise order for use in rendering
     distribution._franchiseOrder = franchiseOrder;
     
     return Object.entries(distribution).sort(([a], [b]) => {
@@ -143,7 +140,6 @@ function Home() {
       twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
       try {
-        // Load Marvel and DC from their separate files
         const franchisePromises = franchises.map(franchise => 
           fetch(`${process.env.PUBLIC_URL || '.'}/${franchise.path}/${franchise.file}`)
             .then(response => response.ok ? response.text() : '')
@@ -174,32 +170,22 @@ function Home() {
             .catch(() => [])
         );
 
-        // Load all other movies from AllMovies.csv
-        const allMoviesPromise = fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`)
-          .then(response => response.ok ? response.text() : '')
-          .then(csvText => {
-            if (!csvText) return [];
-            return new Promise((resolve) => {
-              Papa.parse(csvText, {
-                header: true,
-                complete: (results) => {
-                  const moviesWithFranchise = results.data
-                    .filter(movie => {
-                      const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
-                      const rating = movie['My Tier'] || movie['My Rating'];
-                      return name && name.trim() && rating && rating.trim() && 
-                             rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
-                    })
-                    .map(movie => ({
-                      ...movie,
-                      Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
-                      franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
-                      franchisePath: ''
-                    }));
-                  resolve(moviesWithFranchise);
-                }
-              });
-            });
+        const allMoviesPromise = loadAllMovies()
+          .then(data => {
+            const moviesWithFranchise = data
+              .filter(movie => {
+                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+                const rating = movie['My Tier'] || movie['My Rating'];
+                return name && name.trim() && rating && rating.trim() && 
+                       rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-';
+              })
+              .map(movie => ({
+                ...movie,
+                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+                franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
+                franchisePath: ''
+              }));
+            return moviesWithFranchise;
           })
           .catch(() => []);
 
@@ -212,7 +198,6 @@ function Home() {
         
         setAllMovies(combinedMovies);
         
-        // Filter for recent movies
         const recentMoviesFiltered = combinedMovies.filter(movie => {
           const releaseDate = new Date(movie['Release Date']);
           return releaseDate >= twelveMonthsAgo;
@@ -232,37 +217,30 @@ function Home() {
 
     const loadRecentlyWatched = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`);
-        if (!response.ok) return;
+        const data = await loadAllMovies();
         
-        const csvText = await response.text();
-        Papa.parse(csvText, {
-          header: true,
-          complete: (results) => {
-            const watchedMovies = results.data
-              .filter(movie => {
-                const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
-                const rating = movie['My Tier'] || movie['My Rating'];
-                const watchedDate = movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate;
-                return name && name.trim() && rating && rating.trim() && 
-                       rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-' &&
-                       watchedDate && watchedDate.trim() && watchedDate !== 'N/A';
-              })
-              .map(movie => ({
-                ...movie,
-                Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
-                franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
-                franchisePath: ''
-              }))
-              .sort((a, b) => {
-                const dateA = new Date(a['Watched Date'] || a['Watch Date'] || a.WatchedDate);
-                const dateB = new Date(b['Watched Date'] || b['Watch Date'] || b.WatchedDate);
-                return dateB - dateA;
-              });
-            
-            setRecentlyWatched(watchedMovies.slice(0, 12));
-          }
-        });
+        const watchedMovies = data
+          .filter(movie => {
+            const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+            const rating = movie['My Tier'] || movie['My Rating'];
+            const watchedDate = movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate;
+            return name && name.trim() && rating && rating.trim() && 
+                   rating !== 'N/A' && rating !== 'Not Ranked' && rating !== '' && rating !== '-' &&
+                   watchedDate && watchedDate.trim() && watchedDate !== 'N/A';
+          })
+          .map(movie => ({
+            ...movie,
+            Name: movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title,
+            franchise: movie.Franchise || movie.franchise || 'Non-Franchise',
+            franchisePath: ''
+          }))
+          .sort((a, b) => {
+            const dateA = new Date(a['Watched Date'] || a['Watch Date'] || a.WatchedDate);
+            const dateB = new Date(b['Watched Date'] || b['Watch Date'] || b.WatchedDate);
+            return dateB - dateA;
+          });
+        
+        setRecentlyWatched(watchedMovies.slice(0, 12));
       } catch (error) {
         console.error('Error loading recently watched:', error);
       }
@@ -280,7 +258,6 @@ function Home() {
     } else if (movie.franchise === 'DC') {
       window.location.href = `/movies/${movie.franchisePath}/movie/${movieName}`;
     } else {
-      // Route all other movies to NonFranchiseMoviePage
       window.location.href = `/movies/non-franchise/movie/${movieName}`;
     }
   };
@@ -378,7 +355,6 @@ function Home() {
               </select>
             </div>
             
-            {/* Tooltip below dropdown */}
             <div style={{
               textAlign: 'right',
               marginBottom: '20px',
@@ -419,7 +395,6 @@ function Home() {
                   : allMovies;
                 const percentage = ((totalCount / filteredMovies.length) * 100).toFixed(1);
                 
-                // Get overall franchise order
                 const distributionData = getRatingDistribution();
                 const franchiseOrderEntry = distributionData.find(([r]) => r === '_franchiseOrder');
                 const franchiseOrder = franchiseOrderEntry ? franchiseOrderEntry[1] : [];
@@ -465,9 +440,9 @@ function Home() {
                         .sort(([a], [b]) => {
                           const aIndex = franchiseOrder.indexOf(a);
                           const bIndex = franchiseOrder.indexOf(b);
-                          return aIndex - bIndex; // Biggest first, but column-reverse will put them at bottom
+                          return aIndex - bIndex;
                         })
-                        .map(([franchise, count], index) => {
+                        .map(([franchise, count]) => {
                         const segmentHeight = (count / totalCount) * height;
                         return (
                           <div
@@ -510,65 +485,15 @@ function Home() {
         {recentlyWatched.length > 0 && (
           <div className="recent-movies-section">
             <h2 className="section-title">Recently Watched</h2>
-            <div className="movies-grid">
+            <div className="main-movies-grid">
               {recentlyWatched.map((movie, index) => (
-                <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
-                  <div className="movie-poster">
-                    <img 
-                      src={`${process.env.PUBLIC_URL || '.'}/posters/${movie.Name?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')}.png`}
-                      alt={`${movie.Name} poster`}
-                      onError={(e) => {e.target.style.display = 'none'}}
-                    />
-                    {movie.franchise !== 'Non-Franchise' && movie.franchise !== 'N/A' && (
-                      <span style={{
-                        position: 'absolute',
-                        top: '8px',
-                        left: '8px',
-                        backgroundColor: getFranchiseColor(movie.franchise),
-                        color: movie.franchise === 'Star Wars' ? '#000' : 'white',
-                        padding: '6px 10px',
-                        borderRadius: '16px',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.8px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                        border: movie.franchise === 'Star Wars' ? '1px solid rgba(0,0,0,0.2)' : 'none',
-                        backdropFilter: 'blur(4px)'
-                      }}>
-                        {movie.franchise === 'Fast & Furious' ? 'F&F' : 
-                         movie.franchise === 'Mission Impossible' ? 'MI' :
-                         movie.franchise === 'YRF Spy Universe' ? 'YRF' :
-                         movie.franchise === 'Men in Black' ? 'MIB' :
-                         movie.franchise === 'Despicable Me' ? 'DM' :
-                         movie.franchise}
-                      </span>
-                    )}
-                    {(movie['My Tier'] || movie['My Rating']) && (
-                      <span style={{
-                        position: 'absolute',
-                        bottom: '8px',
-                        right: '8px',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        padding: '5px 8px',
-                        borderRadius: '4px',
-                        fontSize: '11px',
-                        zIndex: 3,
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
-                      }}>
-                        {movie['My Tier'] || movie['My Rating']}
-                      </span>
-                    )}
-                  </div>
-                  <div className="movie-info">
-                    <h3 className="movie-title">{movie.Name}</h3>
-                    <div className="movie-details">
-                      <span className="movie-date">Watched Date: {movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate}</span>
-                    </div>
-                  </div>
-                </div>
+                <MainMovieCard 
+                  key={index} 
+                  movie={movie} 
+                  onClick={handleMovieClick}
+                  customDateLabel="Watched"
+                  customDateValue={movie['Watched Date'] || movie['Watch Date'] || movie.WatchedDate}
+                />
               ))}
             </div>
           </div>
@@ -577,74 +502,13 @@ function Home() {
         {recentMovies.length > 0 && (
           <div className="recent-movies-section">
             <h2 className="section-title">Recently Released</h2>
-            <div className="movies-grid">
+            <div className="main-movies-grid">
               {recentMovies.map((movie, index) => (
-                <div key={index} className="movie-card" onClick={() => handleMovieClick(movie)}>
-                  <div className="movie-poster">
-                    <img 
-                      src={`${process.env.PUBLIC_URL || '.'}/posters/${
-                        movie.franchise === 'Marvel' 
-                          ? movie.Name?.trim().replace(/[:.?!]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.franchise === 'DC'
-                          ? movie.Name?.trim().replace(/[:.?!()]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                          : movie.Name?.trim().replace(/[\/:.?!'()-]/g, '').replace(/\.\.\./g, '').replace(/\s+/g, '_')
-                      }.png`}
-                      alt={`${movie.Name} poster`}
-                      onError={(e) => {e.target.style.display = 'none'}}
-                    />
-                    {movie.franchise !== 'Non-Franchise' && movie.franchise !== 'N/A' && (
-                      <span style={{
-                        position: 'absolute',
-                        top: '8px',
-                        left: '8px',
-                        backgroundColor: getFranchiseColor(movie.franchise),
-                        color: movie.franchise === 'Star Wars' ? '#000' : 'white',
-                        padding: '6px 10px',
-                        borderRadius: '16px',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.8px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                        border: movie.franchise === 'Star Wars' ? '1px solid rgba(0,0,0,0.2)' : 'none',
-                        backdropFilter: 'blur(4px)'
-                      }}>
-                        {movie.franchise === 'Fast & Furious' ? 'F&F' : 
-                          movie.franchise === 'Mission Impossible' ? 'MI' :
-                          movie.franchise === 'YRF Spy Universe' ? 'YRF' :
-                          movie.franchise === 'Men in Black' ? 'MIB' :
-                          movie.franchise === 'Despicable Me' ? 'DM' :
-                          movie.franchise === 'Back To The Future' ? 'BTTF' :
-                          movie.franchise === 'Now You See Me' ? 'NYSM' :
-                          movie.franchise === 'Monsterverse' ? 'MV' :
-                          movie.franchise}
-                      </span>
-                    )}
-                    {(movie['My Tier'] || movie['My Rating']) && (
-                      <span style={{
-                        position: 'absolute',
-                        bottom: '8px',
-                        right: '8px',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        padding: '5px 8px',
-                        borderRadius: '4px',
-                        fontSize: '11px',
-                        zIndex: 3,
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
-                      }}>
-                        {movie['My Tier'] || movie['My Rating']}
-                      </span>
-                    )}
-                  </div>
-                  <div className="movie-info">
-                    <h3 className="movie-title">{movie.Name}</h3>
-                    <div className="movie-details">
-                      <span className="movie-date">Release Date: {movie['Release Date']}</span>
-                    </div>
-                  </div>
-                </div>
+                <MainMovieCard 
+                  key={index} 
+                  movie={movie} 
+                  onClick={handleMovieClick}
+                />
               ))}
             </div>
           </div>

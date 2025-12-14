@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Papa from 'papaparse';
 import Navigation from '../components/Navigation';
+import { loadAllMovies } from '../services/dataService';
 
 function NonFranchiseMoviePage() {
   const { movieTitle } = useParams();
@@ -19,38 +20,28 @@ function NonFranchiseMoviePage() {
         const decodedTitle = decodeURIComponent(movieTitle);
         console.log('Loading details for movie:', decodedTitle);
         
-        const response = await fetch(`${process.env.PUBLIC_URL || '.'}/AllMovies.csv`);
-        if (!response.ok) {
-          throw new Error('Failed to load movie data');
-        }
+        const data = await loadAllMovies();
         
-        const csvText = await response.text();
-        
-        Papa.parse(csvText, {
-          header: true,
-          complete: (results) => {
-            const movies = results.data.filter(movie => {
-              const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
-              return name && name.trim();
-            });
-            
-            const foundMovie = movies.find(m => {
-              const movieName = m['Name '] || m.Name || m.name || m.Movie || m.Title;
-              return movieName === decodedTitle;
-            });
-            
-            if (foundMovie) {
-              setMovie({
-                ...foundMovie,
-                Name: foundMovie['Name '] || foundMovie.Name || foundMovie.name || foundMovie.Movie || foundMovie.Title,
-                Franchise: foundMovie.Franchise || foundMovie.franchise
-              });
-            } else {
-              setError('Movie not found');
-            }
-            setIsLoading(false);
-          }
+        const movies = data.filter(movie => {
+          const name = movie['Name '] || movie.Name || movie.name || movie.Movie || movie.Title;
+          return name && name.trim();
         });
+        
+        const foundMovie = movies.find(m => {
+          const movieName = m['Name '] || m.Name || m.name || m.Movie || m.Title;
+          return movieName === decodedTitle;
+        });
+        
+        if (foundMovie) {
+          setMovie({
+            ...foundMovie,
+            Name: foundMovie['Name '] || foundMovie.Name || foundMovie.name || foundMovie.Movie || foundMovie.Title,
+            Franchise: foundMovie.Franchise || foundMovie.franchise
+          });
+        } else {
+          setError('Movie not found');
+        }
+        setIsLoading(false);
       } catch (err) {
         console.error('Error loading movie:', err);
         setError('Failed to load movie details');
